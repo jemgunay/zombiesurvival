@@ -4,17 +4,23 @@ import * as Input from "./Input";
 
 export default class Player {
     constructor(x, y) {
+        // create player frames
+        let frames = [];
+        for (let i = 0; i < 3; i++) {
+            frames.push(PIXI.Texture.from(`player_000${i}`));
+        }
+
         // create the player
-        this.sprite = new PIXI.Sprite(PIXI.Loader.shared.resources['player_handgun'].texture);
+        this.sprite = new PIXI.AnimatedSprite(frames);
         this.sprite.anchor.set(0.5);
         this.sprite.position.set(x, y);
         this.sprite.angle = 270;
         this.speed = 1.2;
+        this.sprite.animationSpeed = 0.5;
         Stage.addChild(this.sprite);
     }
 
     pointTo(targetX, targetY) {
-        // point player to mouse
         this.sprite.rotation = Math.atan2(targetY - this.sprite.position.y, targetX - this.sprite.position.x)
     }
 
@@ -37,5 +43,12 @@ export default class Player {
 
         let mousePos = Input.getMousePosition()
         this.pointTo(mousePos.x, mousePos.y);
+    }
+
+    shoot() {
+        this.sprite.gotoAndStop(1)
+        setTimeout(() => {
+            this.sprite.gotoAndStop(0)
+        }, 100)
     }
 }

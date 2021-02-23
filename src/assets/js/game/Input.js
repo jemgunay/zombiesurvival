@@ -32,9 +32,9 @@ export function getMousePosition() {
 
 // set up listeners
 export function setStage(stage) {
+    stage.interactive = true;
     // listen for handle key presses
     window.addEventListener('keydown', event => {
-        console.log(event.key);
         keyLookup[event.key] = true;
     }, false);
 
