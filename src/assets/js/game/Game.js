@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js";
+import Victor from "victor"
 import Player from "./Player.js"
+import Zombie from "./Zombie.js"
 import * as Input from "./Input.js"
-
-export let Stage;
 
 export default class Game {
     constructor(container) {
@@ -12,8 +12,9 @@ export default class Game {
             backgroundColor: 0x2c3e50
         });
         container.appendChild(this.app.view);
-        Stage = this.app.stage
-        Input.setStage(Stage);
+        this.app.stage.hitArea = this.app.screen;
+        this.app.stage.interactive = true;
+        Input.setStage(this.app.stage);
 
         // load an image and run the `setup` function when it's done
         PIXI.Loader.shared
@@ -26,7 +27,14 @@ export default class Game {
 
     setup() {
         // create player
-        this.player = new Player(this.app.screen.width / 2, this.app.screen.height / 2)
+        let centerStage = new Victor(this.app.screen.width / 2, this.app.screen.height / 2);
+        this.player = new Player(this.app.stage, centerStage.x, centerStage.y)
+
+        // create zombies
+        this.zombies = [];
+        for (let i = 1; i < 4; i++) {
+            this.zombies.push(new Zombie(this.app.stage, new Victor((this.app.screen.width/4)*i, 50)))
+        }
 
         // listen for mouse click
         this.app.stage
@@ -39,5 +47,10 @@ export default class Game {
 
     update(delta) {
         this.player.step(delta)
+
+        // move zombies towards player
+        for (let zombie of this.zombies) {
+            zombie.step(delta);
+        }
     }
 }

@@ -1,9 +1,8 @@
 import * as PIXI from "pixi.js";
-import {Stage} from "./Game";
 import * as Input from "./Input";
 
 export default class Player {
-    constructor(x, y) {
+    constructor(stage, vec) {
         // create player frames
         let frames = [];
         for (let i = 0; i < 3; i++) {
@@ -13,11 +12,11 @@ export default class Player {
         // create the player
         this.sprite = new PIXI.AnimatedSprite(frames);
         this.sprite.anchor.set(0.5);
-        this.sprite.position.set(x, y);
+        this.sprite.position.set(vec.x, vec.y);
         this.sprite.angle = 270;
         this.speed = 1.2;
         this.sprite.animationSpeed = 0.5;
-        Stage.addChild(this.sprite);
+        stage.addChild(this.sprite);
     }
 
     pointTo(targetX, targetY) {
