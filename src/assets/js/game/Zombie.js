@@ -4,28 +4,38 @@ import * as ResourceManager from "./ResourceManager";
 
 export default class Zombie {
     constructor(stage, pos) {
-        // create a zombie
-        this.sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_legs"));
+        // legs
+        let legsSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_legs"));
+        legsSprite.anchor.set(0.5);
+        legsSprite.angle = 180;
+        legsSprite.animationSpeed = 0.2;
+        legsSprite.play();
 
-        this.sprite.anchor.set(0.5);
-        this.sprite.position.set(pos.x, pos.y);
-        this.sprite.angle = 270;
-        this.sprite.animationSpeed = 0.2;
-        this.sprite.play();
+        // torso
+        let torsoSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_torso"));
+        torsoSprite.anchor.set(0.5);
+        torsoSprite.angle = 180;
+        torsoSprite.animationSpeed = 0.2;
+        torsoSprite.play();
+
+        // create a zombie
+        this.container = new PIXI.Container();
+        this.container.position.set(pos.x, pos.y);
+        this.container.angle = 270;
+        this.container.scale.set(1.2, 1.2);
         this.speed = 0.4;
 
-        stage.addChild(this.sprite);
+        this.container.addChild(legsSprite);
+        this.container.addChild(torsoSprite);
+        stage.addChild(this.container);
     }
 
     step(delta, targetPos) {
-        let targetAngle = this.sprite.rotation = Math.atan2( targetPos.y - this.sprite.position.y, targetPos.x - this.sprite.position.x);
-        if (this.sprite.rotation < targetAngle) {
-            this.sprite.rotation += Math.PI / 2;
-        } else {
-            this.sprite.rotation -= Math.PI / 2;
-        }
+        // rotate to point in target's direction
+        this.container.rotation = Math.atan2(targetPos.y - this.container.position.y, targetPos.x - this.container.position.x) - Math.PI/2;
 
-        this.sprite.x += Math.sin(this.sprite.rotation) * this.speed * delta * -1;
-        this.sprite.y += Math.cos(this.sprite.rotation) * this.speed * delta;
+        // walk forwards
+        this.container.x += Math.sin(this.container.rotation) * this.speed * delta * -1;
+        this.container.y += Math.cos(this.container.rotation) * this.speed * delta;
     }
 }

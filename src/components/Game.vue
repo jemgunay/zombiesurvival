@@ -16,8 +16,8 @@
 
 <style scoped>
     #container {
-        width: 600px;
-        height: 400px;
+        width: 720px;
+        height: 480px;
         margin-left: auto;
         margin-right: auto;
     }

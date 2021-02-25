@@ -8,10 +8,12 @@ export function Load(completedCallback) {
         .add('player', 'game/player.json')
         .add('zombie_legs', 'game/zombie_legs.json')
         .add('zombie_torso', 'game/zombie_torso.json')
-        .add('large_zombie', 'game/large_zombie.json')
+        .add('large_zombie_torso', 'game/large_zombie_torso.json')
         .load(function() {
             LoadFramesFromTexture('player', 3);
             LoadFramesFromTexture('zombie_legs', 17);
+            LoadFramesFromTexture('zombie_torso', 17);
+            LoadFramesFromTexture('large_zombie_torso', 19);
             completedCallback();
         });
 }

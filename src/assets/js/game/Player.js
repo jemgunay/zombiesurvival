@@ -3,24 +3,29 @@ import * as Input from "./Input";
 import * as ResourceManager from "./ResourceManager";
 
 export default class Player {
-    constructor(stage, vec) {
+    constructor(stage, pos) {
         // create the player
         this.sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("player"));
-
+        this.sprite.position.set(pos.x, pos.y);
         this.sprite.anchor.set(0.5);
-        this.sprite.position.set(vec.x, vec.y);
         this.sprite.angle = 270;
+        this.sprite.scale.set(0.8, 0.8);
         this.sprite.animationSpeed = 0.5;
         this.speed = 1.2;
+        this.alive = true;
 
         stage.addChild(this.sprite);
     }
 
-    pointTo(targetX, targetY) {
-        this.sprite.rotation = Math.atan2(targetY - this.sprite.position.y, targetX - this.sprite.position.x)
+    pointTo(target) {
+        this.sprite.rotation = Math.atan2(target.y - this.sprite.position.y, target.x - this.sprite.position.x)
     }
 
     step(delta) {
+        if (this.alive === false) {
+            return;
+        }
+
         let xv = 0;
         let yv = 0;
         if (Input.isKeyPressed(Input.KeyA) || Input.isKeyPressed(Input.KeyLeft)) {
@@ -38,7 +43,7 @@ export default class Player {
         this.sprite.y += yv * delta * this.speed;
 
         let mousePos = Input.getMousePosition()
-        this.pointTo(mousePos.x, mousePos.y);
+        this.pointTo(mousePos);
     }
 
     shoot() {
@@ -46,5 +51,10 @@ export default class Player {
         setTimeout(() => {
             this.sprite.gotoAndStop(0)
         }, 100)
+    }
+
+    die() {
+        this.alive = false;
+        this.sprite.gotoAndStop(2);
     }
 }
