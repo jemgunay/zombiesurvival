@@ -1,29 +1,31 @@
 import * as PIXI from "pixi.js";
+import * as ResourceManager from "./ResourceManager";
+//import Victor from "victor"
 
 export default class Zombie {
     constructor(stage, pos) {
-        // create zombie frames
-        let frames = [];
-        for (let i = 0; i < 16; i++) {
-            frames.push(PIXI.Texture.from(`zombie_legs_000${i}`));
-        }
+        // create a zombie
+        this.sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_legs"));
 
-        // create the player
-        this.sprite = new PIXI.AnimatedSprite(frames);
         this.sprite.anchor.set(0.5);
         this.sprite.position.set(pos.x, pos.y);
         this.sprite.angle = 270;
-        this.speed = 0.6;
-        this.sprite.animationSpeed = 0.5;
+        this.sprite.animationSpeed = 0.2;
         this.sprite.play();
+        this.speed = 0.4;
+
         stage.addChild(this.sprite);
     }
 
-    setTarget(pos) {
-        this.target = pos
-    }
+    step(delta, targetPos) {
+        let targetAngle = this.sprite.rotation = Math.atan2( targetPos.y - this.sprite.position.y, targetPos.x - this.sprite.position.x);
+        if (this.sprite.rotation < targetAngle) {
+            this.sprite.rotation += Math.PI / 2;
+        } else {
+            this.sprite.rotation -= Math.PI / 2;
+        }
 
-    step(delta) {
-        this.sprite.y += this.speed * delta
+        this.sprite.x += Math.sin(this.sprite.rotation) * this.speed * delta * -1;
+        this.sprite.y += Math.cos(this.sprite.rotation) * this.speed * delta;
     }
 }

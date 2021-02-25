@@ -3,6 +3,7 @@ import Victor from "victor"
 import Player from "./Player.js"
 import Zombie from "./Zombie.js"
 import * as Input from "./Input.js"
+import * as ResourceManager from "./ResourceManager.js"
 
 export default class Game {
     constructor(container) {
@@ -16,24 +17,21 @@ export default class Game {
         this.app.stage.interactive = true;
         Input.setStage(this.app.stage);
 
-        // load an image and run the `setup` function when it's done
-        PIXI.Loader.shared
-            .add('player_handgun', 'game/player.json')
-            .add('zombie_legs', 'game/zombie_legs.json')
-            .add('zombie_torso', 'game/zombie_torso.json')
-            .add('large_zombie', 'game/large_zombie.json')
-            .load(() => this.setup());
+        // load all required resources
+        ResourceManager.Load(() => {
+            this.setup();
+        });
     }
 
     setup() {
         // create player
         let centerStage = new Victor(this.app.screen.width / 2, this.app.screen.height / 2);
-        this.player = new Player(this.app.stage, centerStage.x, centerStage.y)
+        this.player = new Player(this.app.stage, centerStage)
 
         // create zombies
         this.zombies = [];
         for (let i = 1; i < 4; i++) {
-            this.zombies.push(new Zombie(this.app.stage, new Victor((this.app.screen.width/4)*i, 50)))
+            this.zombies.push(new Zombie(this.app.stage, new Victor((this.app.screen.width/4)*i, 75)))
         }
 
         // listen for mouse click
@@ -50,7 +48,7 @@ export default class Game {
 
         // move zombies towards player
         for (let zombie of this.zombies) {
-            zombie.step(delta);
+            zombie.step(delta, this.player.sprite.position);
         }
     }
 }

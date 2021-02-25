@@ -1,21 +1,18 @@
 import * as PIXI from "pixi.js";
 import * as Input from "./Input";
+import * as ResourceManager from "./ResourceManager";
 
 export default class Player {
     constructor(stage, vec) {
-        // create player frames
-        let frames = [];
-        for (let i = 0; i < 3; i++) {
-            frames.push(PIXI.Texture.from(`player_000${i}`));
-        }
-
         // create the player
-        this.sprite = new PIXI.AnimatedSprite(frames);
+        this.sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("player"));
+
         this.sprite.anchor.set(0.5);
         this.sprite.position.set(vec.x, vec.y);
         this.sprite.angle = 270;
-        this.speed = 1.2;
         this.sprite.animationSpeed = 0.5;
+        this.speed = 1.2;
+
         stage.addChild(this.sprite);
     }
 
