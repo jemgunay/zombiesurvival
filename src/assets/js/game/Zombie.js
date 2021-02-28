@@ -4,7 +4,7 @@ import {Entity} from "./Entity";
 
 export default class Zombie extends Entity {
     constructor(pos) {
-        super();
+        super(20);
 
         // legs
         let legsSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_legs"));
@@ -28,13 +28,12 @@ export default class Zombie extends Entity {
         // container
         this.position.set(pos.x, pos.y)
         this.scale.set(1.2, 1.2);
-        this.rotation = Math.PI * 1.5;
         this.speed = 0.4;
     }
 
     step(delta, targetPos) {
         // rotate to point in target's direction
-        this.pointTo(targetPos);
+        this.rotation = this.angleBetween(targetPos) - Math.PI * 0.5;
 
         // walk forwards
         this.position.x += Math.sin(this.rotation) * this.speed * delta * -1;

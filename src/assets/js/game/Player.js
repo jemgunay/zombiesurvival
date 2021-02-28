@@ -5,7 +5,7 @@ import * as ResourceManager from "./ResourceManager";
 
 export default class Player extends Entity {
     constructor(pos) {
-        super();
+        super(18);
 
         // create the player
         let sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("player"));
@@ -23,7 +23,7 @@ export default class Player extends Entity {
     }
 
     step(delta) {
-        if (this.alive === false) {
+        if (!this.alive) {
             return;
         }
 
@@ -43,10 +43,14 @@ export default class Player extends Entity {
         this.position.set(this.position.x + xv * delta * this.speed, this.position.y + yv * delta * this.speed);
 
         let mousePos = Input.getMousePosition();
-        this.pointTo(mousePos);
+        this.rotation = this.angleBetween(mousePos);
     }
 
     shoot() {
+        if (!this.alive) {
+            return;
+        }
+
         this.sprite.gotoAndStop(1);
         setTimeout(() => {
             this.sprite.gotoAndStop(0)

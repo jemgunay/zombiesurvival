@@ -10,7 +10,8 @@ export default class Game {
         let app = new PIXI.Application({
             width: container.clientWidth,
             height: container.clientHeight,
-            backgroundColor: 0x2c3e50
+            backgroundColor: 0x2c3e50,
+            antialias: true
         });
         container.appendChild(app.view);
         app.stage.hitArea = app.screen;
@@ -26,7 +27,7 @@ export default class Game {
     setup(app) {
         // create player
         let centerStage = new Victor(app.screen.width / 2, app.screen.height / 2);
-        this.player = new Player(centerStage)
+        this.player = new Player(centerStage);
         app.stage.addChild(this.player);
 
         // create zombies
@@ -47,11 +48,14 @@ export default class Game {
     }
 
     update(delta) {
-        this.player.step(delta)
+        this.player.step(delta);
 
         // move zombies towards player
         for (let zombie of this.zombies) {
             zombie.step(delta, this.player.position);
+            if (this.player.hitTestCircle(zombie)) {
+                this.player.die();
+            }
         }
     }
 }
