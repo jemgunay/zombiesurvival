@@ -1,24 +1,25 @@
 import * as PIXI from "pixi.js";
 import * as Input from "./Input";
+import {Entity} from "./Entity";
 import * as ResourceManager from "./ResourceManager";
 
-export default class Player {
-    constructor(stage, pos) {
+export default class Player extends Entity {
+    constructor(pos) {
+        super();
+
         // create the player
-        this.sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("player"));
-        this.sprite.position.set(pos.x, pos.y);
-        this.sprite.anchor.set(0.5);
-        this.sprite.angle = 270;
-        this.sprite.scale.set(0.8, 0.8);
-        this.sprite.animationSpeed = 0.5;
+        let sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("player"));
+        sprite.anchor.set(0.5);
+        sprite.scale.set(0.8, 0.8);
+        sprite.animationSpeed = 0.5;
+        this.sprite = sprite;
+
+        this.position.set(pos.x, pos.y)
+        this.rotation = Math.PI * 1.5;
         this.speed = 1.2;
         this.alive = true;
 
-        stage.addChild(this.sprite);
-    }
-
-    pointTo(target) {
-        this.sprite.rotation = Math.atan2(target.y - this.sprite.position.y, target.x - this.sprite.position.x)
+        this.addChild(sprite);
     }
 
     step(delta) {
@@ -39,21 +40,23 @@ export default class Player {
             yv = 1;
         }
 
-        this.sprite.x += xv * delta * this.speed;
-        this.sprite.y += yv * delta * this.speed;
+        this.position.set(this.position.x + xv * delta * this.speed, this.position.y + yv * delta * this.speed);
 
-        let mousePos = Input.getMousePosition()
+        let mousePos = Input.getMousePosition();
         this.pointTo(mousePos);
     }
 
     shoot() {
-        this.sprite.gotoAndStop(1)
+        this.sprite.gotoAndStop(1);
         setTimeout(() => {
             this.sprite.gotoAndStop(0)
-        }, 100)
+        }, 100);
     }
 
     die() {
+        if (!this.alive) {
+            return;
+        }
         this.alive = false;
         this.sprite.gotoAndStop(2);
     }
