@@ -3,7 +3,7 @@ import * as ResourceManager from "./ResourceManager";
 import {Entity} from "./Entity";
 
 export default class Zombie extends Entity {
-    constructor(pos) {
+    constructor(x, y) {
         super(20);
 
         // legs
@@ -26,17 +26,31 @@ export default class Zombie extends Entity {
         this.addChild(torsoSprite);
 
         // container
-        this.position.set(pos.x, pos.y)
+        this.position.set(x, y);
         this.scale.set(1.2, 1.2);
         this.speed = 0.4;
+        this.health = 100;
     }
 
-    step(delta, targetPos) {
+    setTargetFunc(targetFunc) {
+        this.targetFunc = targetFunc;
+    }
+
+    step(delta) {
+        let targetPos = this.targetFunc();
+
+        // TODO: rotate over time, not instantly
         // rotate to point in target's direction
         this.rotation = this.angleBetween(targetPos) - Math.PI * 0.5;
 
         // walk forwards
         this.position.x += Math.sin(this.rotation) * this.speed * delta * -1;
         this.position.y += Math.cos(this.rotation) * this.speed * delta;
+    }
+
+    // subtracts hitPoints from zombie health. Returns true if zombie is dead, otherwise false.
+    damage(hitPoints) {
+        this.health -= hitPoints;
+        return this.health <= 0;
     }
 }

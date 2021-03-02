@@ -3,35 +3,40 @@ export const KeyA = 'a';
 export const KeyD = 'd';
 export const KeyW = 'w';
 export const KeyS = 's';
+export const KeyR = 'r';
+export const Key1 = '1';
+export const Key2 = '2';
+export const Key3 = '3';
+export const Key4 = '4';
+export const Key5 = '5';
 export const KeyLeft = 'ArrowLeft';
 export const KeyRight = 'ArrowRight';
 export const KeyUp = 'ArrowUp';
 export const KeyDown = 'ArrowDown';
 
-let keyLookup = {
-    KeyA: false,
-    KeyD: false,
-    KeyW: false,
-    KeyS: false,
-    KeyLeft: false,
-    KeyRight: false,
-    KeyUp: false,
-    KeyDown: false,
-}
+let keyLookup = {};
 
 export function isKeyPressed(key) {
+    if (keyLookup[key] === undefined) {
+        keyLookup[key] = false;
+    }
     return keyLookup[key];
 }
 
 // handle mouse input
 let mousePosition = {x: 0, y: 0}
+let mouseDown = false;
+
+export function isMouseDown() {
+    return mouseDown;
+}
 
 export function getMousePosition() {
     return mousePosition
 }
 
 // set up listeners
-export function setStage(stage) {
+export function Init(stage) {
     // listen for handle key presses
     window.addEventListener('keydown', event => {
         keyLookup[event.key] = true;
@@ -41,6 +46,13 @@ export function setStage(stage) {
     window.addEventListener('keyup', event => {
         keyLookup[event.key] = false;
     }, false);
+
+    // listen for mouse click
+    stage
+        .on('mousedown', () => {mouseDown = true})
+        .on('pointerdown', () => {mouseDown = true})
+        .on('mouseup', () => {mouseDown = false})
+        .on('pointerup', () => {mouseDown = false});
 
     // listen for mouse movement
     stage.on('mousemove', (event) => {
