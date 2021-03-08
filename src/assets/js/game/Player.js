@@ -62,7 +62,7 @@ export default class Player extends Entity {
         if (Input.isKeyPressed(Input.KeyR)) {
             this.reload();
         }
-        // reallow shooting for empty barrel state, i.e. pistols
+        // enable shooting if weapon is in the empty barrel state, i.e. pistols
         if (!Input.isMouseDown() && this.armoury.equipped.state === Weapon.EmptyBarrelState) {
             this.armoury.equipped.state = Weapon.IdleState;
         }

@@ -13,8 +13,8 @@ export default class World {
 
         // create zombies
         this.zombies = [];
-        for (let i = 1; i < 4; i++) {
-            let newZombie = new Zombie((app.screen.width / 4) * i, 75);
+        for (let i = 0; i < 3; i++) {
+            let newZombie = new Zombie((app.screen.width / 4) * (i+1), 75);
             newZombie.setTargetFunc(() => (this.player.position));
             this.zombies.push(newZombie);
             app.stage.addChild(newZombie);
@@ -27,12 +27,24 @@ export default class World {
     }
 
     step(delta) {
+        // sort zombies by distance
+        this.zombies.sort((a, b) => a.distToPlayer - b.distToPlayer);
+        //console.log(this.zombies[0].distToPlayer, this.zombies[1].distToPlayer, this.zombies[2].distToPlayer);
+
         // update all zombies
-        for (let zombie of this.zombies) {
-            zombie.step(delta);
+        for (let i = this.zombies.length - 1; i >= 0; i--) {
+            this.zombies[i].step(delta);
+
+            // determine if zombie is touching the zombie next closest to the player
+            this.zombies[i].setTargetSpeed(0.6);
+            if (i > 0) {
+                if (this.zombies[i].hitTestCircle(this.zombies[i - 1])) {
+                    this.zombies[i].setTargetSpeed(0.2);
+                }
+            }
 
             // check player collision with zombies
-            if (this.player.alive && this.player.hitTestCircle(zombie)) {
+            if (this.player.alive && this.player.hitTestCircle(this.zombies[i])) {
                 this.endGame();
             }
         }
@@ -40,7 +52,7 @@ export default class World {
         // update player
         this.player.step(delta);
 
-        // attack
+        // player attack
         if (Input.isMouseDown() && this.player.alive) {
             let projectile = this.player.attack();
             if (projectile != null) {
@@ -49,6 +61,7 @@ export default class World {
             }
         }
 
+        // check collisions between projectiles and zombies
         for (let i = this.projectiles.length - 1; i >= 0; i--) {
             this.projectiles[i].step(delta);
 
@@ -67,6 +80,7 @@ export default class World {
                 }
             }
         }
+
     }
 
     endGame() {

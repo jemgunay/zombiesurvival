@@ -9,27 +9,36 @@ export default class Zombie extends Entity {
         // legs
         let legsSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_legs"));
         legsSprite.anchor.set(0.5);
-        legsSprite.angle = 180;
-        legsSprite.animationSpeed = 0.2;
+        legsSprite.angle = 90;
         legsSprite.play();
         this.addChild(legsSprite);
 
         // torso
         let torsoSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_torso"));
         torsoSprite.anchor.set(0.5);
+        // randomly flip
         if (Math.round(Math.random())) {
             legsSprite.scale.x *= -1;
         }
-        torsoSprite.angle = 180;
-        torsoSprite.animationSpeed = 0.2;
+        torsoSprite.angle = 90;
         torsoSprite.play();
         this.addChild(torsoSprite);
 
         // container
         this.position.set(x, y);
         this.scale.set(1.2, 1.2);
-        this.speed = 0.4;
+        this.speed = 0;
+        this.rotSpeed = 0.05;
+        this.acceleration = 0.02;
+        this.setTargetSpeed(0.6);
         this.health = 100;
+    }
+
+    setTargetSpeed(speed) {
+        this.targetSpeed = speed;
+        for (let i = 0; i < this.children.length; i++) {
+            this.children[i].animationSpeed = speed * 0.4;
+        }
     }
 
     setTargetFunc(targetFunc) {
@@ -38,14 +47,27 @@ export default class Zombie extends Entity {
 
     step(delta) {
         let targetPos = this.targetFunc();
+        this.distToPlayer = this.distanceTo(targetPos);
 
-        // TODO: rotate over time, not instantly
         // rotate to point in target's direction
-        this.rotation = this.angleBetween(targetPos) - Math.PI * 0.5;
+        let targetRot = this.angleBetween(targetPos) - this.rotation;
+        if (targetRot < -Math.PI) {
+            targetRot += Math.PI * 2;
+        } else if (targetRot > Math.PI) {
+            targetRot -= Math.PI * 2;
+        }
+        this.rotation += targetRot * delta * this.rotSpeed;
+
+        // accelerate/decelerate zombie
+        if (this.speed < this.targetSpeed) {
+            this.speed += this.acceleration;
+        } else if (this.speed > this.targetSpeed) {
+            this.speed -= this.acceleration;
+        }
 
         // walk forwards
-        this.position.x += Math.sin(this.rotation) * this.speed * delta * -1;
-        this.position.y += Math.cos(this.rotation) * this.speed * delta;
+        this.position.x += Math.sin(this.rotation + (Math.PI / 2)) * this.speed * delta;
+        this.position.y += Math.cos(this.rotation - (Math.PI / 2)) * this.speed * delta;
     }
 
     // subtracts hitPoints from zombie health. Returns true if zombie is dead, otherwise false.
