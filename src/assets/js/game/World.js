@@ -1,24 +1,32 @@
 import Player from "./Player.js"
-import Zombie from "./Zombie.js"
+import * as Util from "./Util.js"
 import * as Input from "./Input";
+import LevelManager from "./LevelManager";
+import Zombie from "./Zombie";
 
 export default class World {
     constructor(app) {
         this.app = app;
+        this.zombies = [];
         this.projectiles = [];
 
-        // create player;
+        // create player
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
         app.stage.addChild(this.player);
 
-        // create zombies
-        this.zombies = [];
-        for (let i = 0; i < 3; i++) {
-            let newZombie = new Zombie((app.screen.width / 4) * (i+1), 75);
-            newZombie.setTargetFunc(() => (this.player.position));
-            this.zombies.push(newZombie);
-            app.stage.addChild(newZombie);
-        }
+        // create spawn points
+        const halfWidth = app.screen.width/2;
+        const halfHeight = app.screen.height/2;
+        this.spawnPoints = [
+            {x: halfWidth - 200, y: halfHeight + 200},
+            {x: halfWidth + 200, y: halfHeight + 200},
+            {x: halfWidth + 200, y: halfHeight - 200},
+            {x: halfWidth - 200, y: halfHeight - 200},
+        ];
+
+        // create levels
+        this.levelManager = new LevelManager();
+        this.levelManager.start(0);
 
         // start main game loop
         app.ticker.add(delta => {
@@ -27,9 +35,17 @@ export default class World {
     }
 
     step(delta) {
+        // determine if zombie should spawn
+        if (this.levelManager.shouldSpawn()) {
+            this.spawnZombie();
+        }
+
+        if (this.levelManager.currentLevel.zombieCount === 0 && this.zombies.length === 0) {
+            this.levelManager.start(this.levelManager.currentLevelIndex + 1);
+        }
+
         // sort zombies by distance
         this.zombies.sort((a, b) => a.distToPlayer - b.distToPlayer);
-        //console.log(this.zombies[0].distToPlayer, this.zombies[1].distToPlayer, this.zombies[2].distToPlayer);
 
         // update all zombies
         for (let i = this.zombies.length - 1; i >= 0; i--) {
@@ -67,20 +83,30 @@ export default class World {
 
             for (let j = this.zombies.length - 1; j >= 0; j--) {
                 if (this.zombies[j].hitTestCircle(this.projectiles[i])) {
-                    if (this.zombies[j].damage(this.projectiles[i].damage)) {
+                    if (this.zombies[j].applyDamage(this.projectiles[i].damage)) {
                         // remove zombie
+                        // TODO: blood splat
                         this.app.stage.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
                     }
 
                     // remove projectile
+                    // TODO: apply impulse to zombie on impact
                     this.app.stage.removeChild(this.projectiles[i]);
                     this.projectiles.splice(i, 1);
                     break;
                 }
             }
         }
+    }
 
+    spawnZombie() {
+        // create zombie
+        let randomSpawn = this.spawnPoints[Util.RandomNumber(0, this.spawnPoints.length - 1)]
+        let newZombie = new Zombie(randomSpawn.x, randomSpawn.y, this.player.angleBetween(randomSpawn) + Math.PI);
+        newZombie.setTargetFunc(() => (this.player.position));
+        this.zombies.push(newZombie);
+        this.app.stage.addChild(newZombie);
     }
 
     endGame() {
@@ -88,17 +114,12 @@ export default class World {
 
         // set all zombies to an idle routine to leave the level bounds
         for (let zombie of this.zombies) {
-            let randRadius = this.randomNumber(0, 360) * Math.PI / 180;
+            let randRadius = Util.RandomNumber(0, 360) * Math.PI / 180;
             let targetX = Math.cos(randRadius) * this.app.screen.width * 1.2;
             let targetY = Math.sin(randRadius) * this.app.screen.width * 1.2;
             zombie.setTargetFunc(() => {
                 return {x: targetX, y: targetY};
             });
         }
-    }
-
-    randomNumber(min, max) {
-        const r = Math.random() * (max - min) + min;
-        return Math.floor(r);
     }
 }

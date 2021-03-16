@@ -3,7 +3,7 @@ import * as ResourceManager from "./ResourceManager";
 import {Entity} from "./Entity";
 
 export default class Zombie extends Entity {
-    constructor(x, y) {
+    constructor(x, y, rotation) {
         super(20);
 
         // legs
@@ -27,6 +27,7 @@ export default class Zombie extends Entity {
         // container
         this.position.set(x, y);
         this.scale.set(1.2, 1.2);
+        this.rotation = rotation;
         this.speed = 0;
         this.rotSpeed = 0.05;
         this.acceleration = 0.02;
@@ -71,7 +72,7 @@ export default class Zombie extends Entity {
     }
 
     // subtracts hitPoints from zombie health. Returns true if zombie is dead, otherwise false.
-    damage(hitPoints) {
+    applyDamage(hitPoints) {
         this.health -= hitPoints;
         return this.health <= 0;
     }

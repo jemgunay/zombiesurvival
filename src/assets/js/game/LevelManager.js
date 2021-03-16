@@ -1,0 +1,54 @@
+import * as Util from "./Util";
+
+export default class LevelManager {
+    constructor() {
+        this.levels = [
+            {
+                zombieCount: 3,
+                spawnTime: {min: 2000, max: 2200}
+            },
+            {
+                zombieCount: 7,
+                spawnTime: {min: 1300, max: 2000}
+            },
+            {
+                zombieCount: 12,
+                spawnTime: {min: 900, max: 1200}
+            },
+            {
+                zombieCount: 28,
+                spawnTime: {min: 800, max: 1100}
+            }
+        ];
+        this.state = true;
+    }
+
+    start(index) {
+        console.log("starting level", index+1);
+        this.currentLevelIndex = index;
+        this.currentLevel = this.levels[index];
+        this.tick()
+    }
+
+    tick() {
+        setTimeout(() => {
+            this.currentLevel.zombieCount--
+            this.readyToSpawn = true
+        }, Util.RandomNumber(this.currentLevel.spawnTime.min, this.currentLevel.spawnTime.max));
+    }
+
+    shouldSpawn() {
+        if (this.readyToSpawn) {
+            this.readyToSpawn = false;
+            if (this.currentLevel.zombieCount > 0) {
+                this.tick();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    stop() {
+
+    }
+}
