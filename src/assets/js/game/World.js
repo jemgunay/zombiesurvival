@@ -1,14 +1,19 @@
+import * as PIXI from "pixi.js";
 import Player from "./Player.js"
 import * as Util from "./Util.js"
 import * as Input from "./Input";
 import LevelManager from "./LevelManager";
 import Zombie from "./Zombie";
+import * as Decal from "./Decal";
 
 export default class World {
     constructor(app) {
         this.app = app;
         this.zombies = [];
         this.projectiles = [];
+        this.bloodDecals = [];
+        this.decalContainer = new PIXI.Container();
+        this.app.stage.addChild(this.decalContainer);
 
         // create player
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
@@ -83,8 +88,12 @@ export default class World {
             for (let j = this.zombies.length - 1; j >= 0; j--) {
                 if (this.zombies[j].hitTestCircle(this.projectiles[i])) {
                     if (this.zombies[j].applyDamage(this.projectiles[i].damage)) {
+                        // blood splat decal
+                        let newSplat = new Decal.BloodSplat(this.zombies[j].x, this.zombies[j].y, this.zombies[j].rotation);
+                        this.bloodDecals.push(newSplat);
+                        this.decalContainer.addChild(newSplat);
+
                         // remove zombie
-                        // TODO: blood splat
                         this.app.stage.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
                     }

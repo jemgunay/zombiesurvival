@@ -19,7 +19,6 @@ export default class UI extends PIXI.Container {
 
         // create ammo text
         this.ammoText = new PIXI.Text("", textStyle);
-        this.ammoText.y = Game.app.screen.height - 50;
         this.addChild(this.ammoText);
 
         // move to front
@@ -33,5 +32,6 @@ export default class UI extends PIXI.Container {
     setAmmoText(loaded, unloaded) {
         this.ammoText.text = loaded + " / " + unloaded;
         this.ammoText.x = Game.app.screen.width - this.ammoText.width - 20;
+        this.ammoText.y = Game.app.screen.height - 50;
     }
 }

@@ -23,7 +23,7 @@ export default class Zombie extends Entity {
 
         // container
         this.position.set(x, y);
-        this.scale.set(1.2, 1.2);
+        this.scale.set(1.25, 1.25);
         // randomly flip
         if (Util.RandomBool()) {
             this.scale.y *= -1;

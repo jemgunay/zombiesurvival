@@ -48,7 +48,6 @@ export class Armoury {
             return;
         }
         this.equipped = this.weapons[slotIndex];
-        console.log(`loaded: ${this.equipped.ammoLoaded}, armoury: ${this.ammo[this.equipped.ammoType].count} (${this.equipped.ammoType})`);
     }
 }
 
