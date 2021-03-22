@@ -15,18 +15,18 @@ export class Armoury {
         this.ammo = {};
         this.ammo[PistolAmmo] = {
             count: 20,
-            projectileSpeed: 10,
+            projectileSpeed: 16,
             projectileDamage: 40,
         }
         this.ammo[RifleAmmo] = {
             count: 60,
-            projectileSpeed: 15,
+            projectileSpeed: 18,
             projectileDamage: 26,
         }
         this.ammo[ShotgunAmmo] = {
             count: 20,
-            projectileSpeed: 13,
-            projectileDamage: 15,
+            projectileSpeed: 16,
+            projectileDamage: 22,
         }
         this.weapons = [];
         this.equipped = null;
@@ -84,7 +84,7 @@ export class Pistol extends Weapon {
             reloadDuration: 2000,
             ammoCapacity: 10,
             projectilesPerShot: 1,
-            spread: 3,
+            spread: 1,
             ammoType: PistolAmmo,
             idleFrame: 0,
             shootFrame: 1,
@@ -101,7 +101,7 @@ export class AssaultRifle extends Weapon {
             reloadDuration: 2000,
             ammoCapacity: 30,
             projectilesPerShot: 1,
-            spread: 5,
+            spread: 3,
             ammoType: RifleAmmo,
             idleFrame: 0,
             shootFrame: 1,
@@ -118,7 +118,7 @@ export class Shotgun extends Weapon {
             reloadDuration: 2000,
             ammoCapacity: 8,
             projectilesPerShot: 10,
-            spread: 25,
+            spread: 18,
             ammoType: ShotgunAmmo,
             idleFrame: 0,
             shootFrame: 1,

@@ -15,18 +15,16 @@ export default class World {
         app.stage.addChild(this.player);
 
         // create spawn points
-        const halfWidth = app.screen.width/2;
-        const halfHeight = app.screen.height/2;
         this.spawnPoints = [
-            {x: halfWidth - 200, y: halfHeight + 200},
-            {x: halfWidth + 200, y: halfHeight + 200},
-            {x: halfWidth + 200, y: halfHeight - 200},
-            {x: halfWidth - 200, y: halfHeight - 200},
+            {x: 50, y: 50},
+            {x: 50, y: app.screen.height - 50},
+            {x: app.screen.width - 50, y: 50},
+            {x: app.screen.width - 50, y: app.screen.height - 50},
         ];
 
         // create levels
         this.levelManager = new LevelManager();
-        this.levelManager.start(0);
+        this.levelManager.next();
 
         // start main game loop
         app.ticker.add(delta => {
@@ -40,8 +38,9 @@ export default class World {
             this.spawnZombie();
         }
 
+        // start next round
         if (this.levelManager.currentLevel.zombieCount === 0 && this.zombies.length === 0) {
-            this.levelManager.start(this.levelManager.currentLevelIndex + 1);
+            this.levelManager.next();
         }
 
         // sort zombies by distance
@@ -71,11 +70,9 @@ export default class World {
         // player attack
         if (Input.isMouseDown() && this.player.alive) {
             let projectiles = this.player.attack();
-            if (projectiles !== null) {
-                for (let projectile of projectiles) {
-                    this.app.stage.addChild(projectile);
-                    this.projectiles.push(projectile);
-                }
+            for (let projectile of projectiles) {
+                this.app.stage.addChild(projectile);
+                this.projectiles.push(projectile);
             }
         }
 
@@ -104,7 +101,7 @@ export default class World {
 
     spawnZombie() {
         // create zombie
-        let randomSpawn = this.spawnPoints[Util.RandomNumber(0, this.spawnPoints.length - 1)]
+        let randomSpawn = this.spawnPoints[Util.RandomNumber(0, this.spawnPoints.length - 1)];
         let newZombie = new Zombie(randomSpawn.x, randomSpawn.y, this.player.angleBetween(randomSpawn) + Math.PI);
         newZombie.setTargetFunc(() => (this.player.position));
         this.zombies.push(newZombie);

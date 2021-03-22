@@ -5,6 +5,7 @@ import * as Weapon from "./Weapon";
 import Projectile from "./Projectile";
 import * as ResourceManager from "./ResourceManager";
 import * as Util from "./Util";
+import {Game} from "./Game";
 
 export default class Player extends Entity {
     constructor(x, y) {
@@ -30,6 +31,8 @@ export default class Player extends Entity {
     }
 
     step(delta) {
+        Game.ui.setAmmoText(this.armoury.equipped.ammoLoaded, this.armoury.ammo[this.armoury.equipped.ammoType].count);
+
         if (this.alive === false) {
             return;
         }
@@ -72,7 +75,7 @@ export default class Player extends Entity {
 
     attack() {
         if (this.armoury.equipped.state !== Weapon.IdleState || this.armoury.equipped.ammoLoaded === 0) {
-            return null;
+            return [];
         }
         this.armoury.equipped.state = Weapon.ShootingState;
         this.sprite.gotoAndStop(this.armoury.equipped.shootFrame);
@@ -108,7 +111,7 @@ export default class Player extends Entity {
             );
             projectiles.push(newProjectile);
         }
-        return projectiles
+        return projectiles;
     }
 
     reload() {
@@ -142,7 +145,6 @@ export default class Player extends Entity {
             this.armoury.equipped.ammoLoaded += diff;
 
             this.armoury.equipped.state = Weapon.IdleState;
-            console.log(`loaded: ${this.armoury.equipped.ammoLoaded}, armoury: ${this.armoury.ammo[this.armoury.equipped.ammoType].count} (${this.armoury.equipped.ammoType})`);
         }, this.armoury.equipped.reloadDuration);
     }
 

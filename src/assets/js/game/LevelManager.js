@@ -1,4 +1,5 @@
 import * as Util from "./Util";
+import {Game} from "./Game";
 
 export default class LevelManager {
     constructor() {
@@ -20,20 +21,24 @@ export default class LevelManager {
                 spawnTime: {min: 800, max: 1100}
             }
         ];
-        this.state = true;
+        this.currentLevelNum = 0;
     }
 
-    start(index) {
-        console.log("starting level", index+1);
-        this.currentLevelIndex = index;
-        this.currentLevel = this.levels[index];
-        this.tick()
+    next() {
+        if (this.currentLevelNum === this.levels.length) {
+            return;
+        }
+        this.currentLevelNum++;
+        this.currentLevel = this.levels[this.currentLevelNum-1];
+        console.log("starting level", this.currentLevelNum);
+        Game.ui.setRoundText(this.currentLevelNum);
+        this.tick();
     }
 
     tick() {
         setTimeout(() => {
-            this.currentLevel.zombieCount--
-            this.readyToSpawn = true
+            this.currentLevel.zombieCount--;
+            this.readyToSpawn = true;
         }, Util.RandomNumber(this.currentLevel.spawnTime.min, this.currentLevel.spawnTime.max));
     }
 
@@ -46,9 +51,5 @@ export default class LevelManager {
             return true;
         }
         return false;
-    }
-
-    stop() {
-
     }
 }

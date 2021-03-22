@@ -3,13 +3,13 @@
 </template>
 
 <script>
-    import Game from '@/assets/js/game/Game.js'
+    import {Game} from '@/assets/js/game/Game.js'
 
     export default {
         name: 'Game',
         mounted() {
             let container = document.getElementById('container');
-            this.game = new Game(container);
+            Game.init(container);
         }
     }
 </script>
