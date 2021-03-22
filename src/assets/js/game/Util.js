@@ -1,6 +1,15 @@
+export function DegToRad(deg) {
+    return deg * Math.PI/180;
+}
 
+export function RadToDeg(rad) {
+    return rad * 180/Math.PI;
+}
 
 export function RandomNumber(min, max) {
-    const r = Math.random() * (max - min) + min;
-    return Math.floor(r);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function RandomBool() {
+    return RandomNumber(0, 1) === 0;
 }

@@ -4,6 +4,7 @@ import {Entity} from "./Entity";
 import * as Weapon from "./Weapon";
 import Projectile from "./Projectile";
 import * as ResourceManager from "./ResourceManager";
+import * as Util from "./Util";
 
 export default class Player extends Entity {
     constructor(x, y) {
@@ -23,6 +24,7 @@ export default class Player extends Entity {
         this.armoury = new Weapon.Armoury();
         this.armoury.addWeapon(new Weapon.Pistol());
         this.armoury.addWeapon(new Weapon.AssaultRifle());
+        this.armoury.addWeapon(new Weapon.Shotgun());
 
         this.addChild(sprite);
     }
@@ -74,7 +76,7 @@ export default class Player extends Entity {
         }
         this.armoury.equipped.state = Weapon.ShootingState;
         this.sprite.gotoAndStop(this.armoury.equipped.shootFrame);
-        this.armoury.equipped.ammoLoaded -= this.armoury.equipped.ammoPerShot;
+        this.armoury.equipped.ammoLoaded--;
 
         // reset to idle frame
         setTimeout(() => {
@@ -91,13 +93,22 @@ export default class Player extends Entity {
         }, this.armoury.equipped.shootDuration);
 
         // create projectile
-        return new Projectile(
-            this.position.x,
-            this.position.y,
-            this.rotation,
-            this.armoury.ammo[this.armoury.equipped.ammoType].projectileDamage,
-            this.armoury.ammo[this.armoury.equipped.ammoType].projectileSpeed,
-        );
+        let projectiles = [];
+        for (let i = 0; i < this.armoury.equipped.projectilesPerShot; i++) {
+            let rotationOffset = Util.RandomNumber(0, this.armoury.equipped.spread);
+            if (Util.RandomBool()) {
+                rotationOffset *= -1;
+            }
+            let newProjectile = new Projectile(
+                this.position.x,
+                this.position.y,
+                this.rotation + Util.DegToRad(rotationOffset),
+                this.armoury.ammo[this.armoury.equipped.ammoType].projectileDamage,
+                this.armoury.ammo[this.armoury.equipped.ammoType].projectileSpeed,
+            );
+            projectiles.push(newProjectile);
+        }
+        return projectiles
     }
 
     reload() {

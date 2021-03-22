@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import * as ResourceManager from "./ResourceManager";
 import {Entity} from "./Entity";
+import * as Util from "./Util";
 
 export default class Zombie extends Entity {
     constructor(x, y, rotation) {
@@ -16,10 +17,6 @@ export default class Zombie extends Entity {
         // torso
         let torsoSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_torso"));
         torsoSprite.anchor.set(0.5);
-        // randomly flip
-        if (Math.round(Math.random())) {
-            legsSprite.scale.x *= -1;
-        }
         torsoSprite.angle = 90;
         torsoSprite.play();
         this.addChild(torsoSprite);
@@ -27,6 +24,10 @@ export default class Zombie extends Entity {
         // container
         this.position.set(x, y);
         this.scale.set(1.2, 1.2);
+        // randomly flip
+        if (Util.RandomBool()) {
+            this.scale.y *= -1;
+        }
         this.rotation = rotation;
         this.speed = 0;
         this.rotSpeed = 0.05;

@@ -70,10 +70,12 @@ export default class World {
 
         // player attack
         if (Input.isMouseDown() && this.player.alive) {
-            let projectile = this.player.attack();
-            if (projectile != null) {
-                this.app.stage.addChild(projectile);
-                this.projectiles.push(projectile);
+            let projectiles = this.player.attack();
+            if (projectiles !== null) {
+                for (let projectile of projectiles) {
+                    this.app.stage.addChild(projectile);
+                    this.projectiles.push(projectile);
+                }
             }
         }
 

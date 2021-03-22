@@ -60,7 +60,7 @@ export class Weapon {
         this.reloadDuration = 0;
         this.ammoCapacity = 0;
         this.ammoLoaded = 0;
-        this.ammoPerShot = 0;
+        this.projectilesPerShot = 0;
         this.spread = 0;
         this.ammoType = null;
         this.idleFrame = 0;
@@ -83,8 +83,8 @@ export class Pistol extends Weapon {
             shootDuration: 250,
             reloadDuration: 2000,
             ammoCapacity: 10,
-            ammoPerShot: 1,
-            spread: 10,
+            projectilesPerShot: 1,
+            spread: 3,
             ammoType: PistolAmmo,
             idleFrame: 0,
             shootFrame: 1,
@@ -100,9 +100,26 @@ export class AssaultRifle extends Weapon {
             shootDuration: 150,
             reloadDuration: 2000,
             ammoCapacity: 30,
-            ammoPerShot: 1,
-            spread: 10,
+            projectilesPerShot: 1,
+            spread: 5,
             ammoType: RifleAmmo,
+            idleFrame: 0,
+            shootFrame: 1,
+        });
+    }
+}
+
+export class Shotgun extends Weapon {
+    constructor() {
+        super({
+            name: "shotgun",
+            trigger: SemiAutoTrigger,
+            shootDuration: 800,
+            reloadDuration: 2000,
+            ammoCapacity: 8,
+            projectilesPerShot: 10,
+            spread: 25,
+            ammoType: ShotgunAmmo,
             idleFrame: 0,
             shootFrame: 1,
         });

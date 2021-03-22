@@ -6,7 +6,7 @@ export default class Projectile extends PIXI.Graphics {
 
         this.damage = damage;
         this.radius = 2;
-        this.beginFill(0x9966FF);
+        this.beginFill(0x191919);
         this.drawCircle(0, 0, this.radius);
         this.endFill();
         this.x = x;
