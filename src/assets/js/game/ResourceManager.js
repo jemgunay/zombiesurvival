@@ -9,7 +9,9 @@ export function Load(completedCallback) {
         .add('zombie_legs', 'game/zombie_legs.json')
         .add('zombie_torso', 'game/zombie_torso.json')
         .add('large_zombie_torso', 'game/large_zombie_torso.json')
+        .add('grass', 'game/grass.jpg')
         .add('directional_blood_splat', 'game/directional_blood_splat.png')
+        .add('downward_blood_splat', 'game/downward_blood_splat.png')
         .load(function () {
             LoadFramesFromTexture('player', 3);
             LoadFramesFromTexture('zombie_legs', 17);
@@ -34,6 +36,11 @@ export function LoadFramesFromTexture(prefix, frameCount) {
         frames.push(PIXI.Texture.from(prefix + `_` + num));
     }
     frameStore[prefix] = frames;
+}
+
+// GetTexture returns a cached image texture.
+export function GetTexture(prefix) {
+    return PIXI.utils.TextureCache[prefix];
 }
 
 // GetSprite creates a spite from a cached image texture.

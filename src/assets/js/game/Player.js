@@ -14,7 +14,7 @@ export default class Player extends Entity {
         // create the player
         let sprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("player"));
         sprite.anchor.set(0.5);
-        sprite.scale.set(0.8, 0.8);
+        sprite.scale.set(0.8);
         sprite.animationSpeed = 0.5;
         this.sprite = sprite;
 
@@ -98,7 +98,7 @@ export default class Player extends Entity {
         // create projectile
         let projectiles = [];
         for (let i = 0; i < this.armoury.equipped.projectilesPerShot; i++) {
-            let rotationOffset = Util.RandomNumber(0, this.armoury.equipped.spread);
+            let rotationOffset = Util.RandomInt(0, this.armoury.equipped.spread);
             if (Util.RandomBool()) {
                 rotationOffset *= -1;
             }

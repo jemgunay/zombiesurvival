@@ -32,6 +32,6 @@ export default class UI extends PIXI.Container {
     setAmmoText(loaded, unloaded) {
         this.ammoText.text = loaded + " / " + unloaded;
         this.ammoText.x = Game.app.screen.width - this.ammoText.width - 20;
-        this.ammoText.y = Game.app.screen.height - 50;
+        this.ammoText.y = Game.app.screen.height - this.ammoText.height - 20;
     }
 }

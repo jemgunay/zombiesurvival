@@ -39,7 +39,7 @@ export default class LevelManager {
         setTimeout(() => {
             this.currentLevel.zombieCount--;
             this.readyToSpawn = true;
-        }, Util.RandomNumber(this.currentLevel.spawnTime.min, this.currentLevel.spawnTime.max));
+        }, Util.RandomInt(this.currentLevel.spawnTime.min, this.currentLevel.spawnTime.max));
     }
 
     shouldSpawn() {

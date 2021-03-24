@@ -10,7 +10,7 @@ export let Game = {
         this.app = new PIXI.Application({
             width: container.clientWidth,
             height: container.clientHeight,
-            backgroundColor: 0x2c3e50,
+            transparent: true,
             antialias: true
         });
         container.appendChild(this.app.view);

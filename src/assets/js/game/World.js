@@ -3,6 +3,7 @@ import Player from "./Player.js"
 import * as Util from "./Util.js"
 import * as Input from "./Input";
 import LevelManager from "./LevelManager";
+import * as ResourceManager from "./ResourceManager";
 import Zombie from "./Zombie";
 import * as Decal from "./Decal";
 
@@ -11,9 +12,16 @@ export default class World {
         this.app = app;
         this.zombies = [];
         this.projectiles = [];
-        this.bloodDecals = [];
+        let groundSprite = new PIXI.TilingSprite(
+            ResourceManager.GetTexture('grass'),
+            app.screen.width,
+            app.screen.height,
+        );
+        groundSprite.tileScale.set(0.25);
+        app.stage.addChild(groundSprite);
+        // TODO: use ParticleContainers for decals
         this.decalContainer = new PIXI.Container();
-        this.app.stage.addChild(this.decalContainer);
+        app.stage.addChild(this.decalContainer);
 
         // create player
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
@@ -88,14 +96,17 @@ export default class World {
             for (let j = this.zombies.length - 1; j >= 0; j--) {
                 if (this.zombies[j].hitTestCircle(this.projectiles[i])) {
                     if (this.zombies[j].applyDamage(this.projectiles[i].damage)) {
-                        // blood splat decal
-                        let newSplat = new Decal.BloodSplat(this.zombies[j].x, this.zombies[j].y, this.zombies[j].rotation);
-                        this.bloodDecals.push(newSplat);
+                        // directional  blood splat decal
+                        let newSplat = new Decal.NewDirectionalBlood(this.zombies[j].x, this.zombies[j].y, this.zombies[j].rotation);
                         this.decalContainer.addChild(newSplat);
 
                         // remove zombie
                         this.app.stage.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
+                    } else {
+                        // downward blood splat decal
+                        let newSplat = new Decal.NewDownwardBlood(this.zombies[j].x, this.zombies[j].y);
+                        this.decalContainer.addChild(newSplat);
                     }
 
                     // remove projectile
@@ -110,7 +121,7 @@ export default class World {
 
     spawnZombie() {
         // create zombie
-        let randomSpawn = this.spawnPoints[Util.RandomNumber(0, this.spawnPoints.length - 1)];
+        let randomSpawn = this.spawnPoints[Util.RandomInt(0, this.spawnPoints.length - 1)];
         let newZombie = new Zombie(randomSpawn.x, randomSpawn.y, this.player.angleBetween(randomSpawn) + Math.PI);
         newZombie.setTargetFunc(() => (this.player.position));
         this.zombies.push(newZombie);
@@ -122,7 +133,7 @@ export default class World {
 
         // set all zombies to an idle routine to leave the level bounds
         for (let zombie of this.zombies) {
-            let randRadius = Util.RandomNumber(0, 360) * Math.PI / 180;
+            let randRadius = Util.RandomInt(0, 360) * Math.PI / 180;
             let targetX = Math.cos(randRadius) * this.app.screen.width * 1.2;
             let targetY = Math.sin(randRadius) * this.app.screen.width * 1.2;
             zombie.setTargetFunc(() => {
