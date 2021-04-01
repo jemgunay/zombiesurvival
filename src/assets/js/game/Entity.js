@@ -10,6 +10,11 @@ export class Entity extends PIXI.Container {
         return Math.atan2(pos.y - this.position.y, pos.x - this.position.x);
     }
 
+    angleBetweenGlobal(pos) {
+        let globalPos = this.getGlobalPosition();
+        return Math.atan2(pos.y - globalPos.y, pos.x - globalPos.x);
+    }
+
     distanceTo(pos) {
         return Math.sqrt(Math.pow(this.position.x - pos.x, 2) + Math.pow(this.position.y - pos.y, 2));
     }

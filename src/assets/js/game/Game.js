@@ -16,6 +16,7 @@ export let Game = {
         container.appendChild(this.app.view);
         this.app.stage.hitArea = this.app.screen;
         this.app.stage.interactive = true;
+        this.app.stage.sortableChildren = true;
 
         // load all required resources
         ResourceManager.Load(() => {
@@ -25,10 +26,10 @@ export let Game = {
             // set up UI
             this.ui = new UI();
             this.app.stage.addChild(this.ui);
-            this.app.stage.sortableChildren = true;
 
             // start world
-            new World(this.app);
+            this.world = new World(this.app);
+            this.app.stage.addChild(this.world);
         });
     }
 }

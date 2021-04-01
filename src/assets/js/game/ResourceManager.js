@@ -5,14 +5,19 @@ let frameStore = {};
 // loads all sprite sheets into memory, then process frames out of them for consumption during sprite creation.
 export function Load(completedCallback) {
     PIXI.Loader.shared
-        .add('player', 'game/player.json')
-        .add('zombie_legs', 'game/zombie_legs.json')
-        .add('zombie_torso', 'game/zombie_torso.json')
-        .add('large_zombie_torso', 'game/large_zombie_torso.json')
-        .add('grass', 'game/grass.jpg')
-        .add('directional_blood_splat', 'game/directional_blood_splat.png')
-        .add('downward_blood_splat', 'game/downward_blood_splat.png')
+        // sprite sheets
+        .add('player', 'game/images/player.json')
+        .add('zombie_legs', 'game/images/zombie_legs.json')
+        .add('zombie_torso', 'game/images/zombie_torso.json')
+        .add('large_zombie_torso', 'game/images/large_zombie_torso.json')
+        // static images
+        .add('grass', 'game/images/grass.jpg')
+        .add('directional_blood_splat', 'game/images/directional_blood_splat.png')
+        .add('downward_blood_splat', 'game/images/downward_blood_splat.png')
+        // sounds
+        //.add('bird', 'game/sounds/pistol.mp3')
         .load(function () {
+            // generate frames from sprite sheets
             LoadFramesFromTexture('player', 3);
             LoadFramesFromTexture('zombie_legs', 17);
             LoadFramesFromTexture('zombie_torso', 17);

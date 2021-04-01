@@ -53,7 +53,7 @@ export default class Player extends Entity {
         this.position.set(this.position.x + xv * delta * this.speed, this.position.y + yv * delta * this.speed);
 
         let mousePos = Input.getMousePosition();
-        this.rotation = this.angleBetween(mousePos);
+        this.rotation = this.angleBetweenGlobal(mousePos);
 
         if (Input.isKeyPressed(Input.Key1)) {
             this.armoury.equip(0);
@@ -61,6 +61,10 @@ export default class Player extends Entity {
             this.armoury.equip(1);
         } else if (Input.isKeyPressed(Input.Key3)) {
             this.armoury.equip(2);
+        } else if (Input.isKeyPressed(Input.Key4)) {
+            this.armoury.equip(3);
+        } else if (Input.isKeyPressed(Input.Key5)) {
+            this.armoury.equip(4);
         }
 
         // reload weapon
@@ -83,7 +87,9 @@ export default class Player extends Entity {
 
         // reset to idle frame
         setTimeout(() => {
-            this.sprite.gotoAndStop(this.armoury.equipped.idleFrame);
+            if (this.alive) {
+                this.sprite.gotoAndStop(this.armoury.equipped.idleFrame);
+            }
         }, 200);
 
         // end of attack - reset state

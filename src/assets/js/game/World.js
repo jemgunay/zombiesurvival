@@ -7,25 +7,29 @@ import * as ResourceManager from "./ResourceManager";
 import Zombie from "./Zombie";
 import * as Decal from "./Decal";
 
-export default class World {
+export default class World extends PIXI.Container {
     constructor(app) {
+        super();
+
         this.app = app;
+        this.sortableChildren = true;
         this.zombies = [];
         this.projectiles = [];
         let groundSprite = new PIXI.TilingSprite(
             ResourceManager.GetTexture('grass'),
-            app.screen.width,
-            app.screen.height,
+            app.screen.width*2,
+            app.screen.height*2,
         );
-        groundSprite.tileScale.set(0.25);
-        app.stage.addChild(groundSprite);
+        groundSprite.anchor.set(0.25);
+        //groundSprite.tileScale.set(0.25);
+        this.addChild(groundSprite);
         // TODO: use ParticleContainers for decals
         this.decalContainer = new PIXI.Container();
-        app.stage.addChild(this.decalContainer);
+        this.addChild(this.decalContainer);
 
         // create player
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
-        app.stage.addChild(this.player);
+        this.addChild(this.player);
 
         // create spawn points
         this.spawnPoints = [
@@ -80,11 +84,34 @@ export default class World {
         // update player
         this.player.step(delta);
 
+        // make camera follow player
+        let playerPos = this.player.getGlobalPosition();
+        let cameraVel = {
+            x: Math.abs(playerPos.x - this.app.screen.width/2) * 0.1,
+            y: Math.abs(playerPos.y - this.app.screen.height/2) * 0.1,
+        };
+        if (cameraVel.x < 0.05) {
+            cameraVel.x = 0;
+        }
+        if (cameraVel.y < 0.05) {
+            cameraVel.y = 0;
+        }
+        if (playerPos.x < this.app.screen.width/2) {
+            this.x += cameraVel.x;
+        } else if (playerPos.x > this.app.screen.width/2) {
+            this.x -= cameraVel.x;
+        }
+        if (playerPos.y < this.app.screen.height/2) {
+            this.y += cameraVel.y;
+        } else if (playerPos.y > this.app.screen.height/2) {
+            this.y -= cameraVel.y;
+        }
+
         // player attack
         if (Input.isMouseDown() && this.player.alive) {
             let projectiles = this.player.attack();
             for (let projectile of projectiles) {
-                this.app.stage.addChild(projectile);
+                this.addChild(projectile);
                 this.projectiles.push(projectile);
             }
         }
@@ -101,7 +128,7 @@ export default class World {
                         this.decalContainer.addChild(newSplat);
 
                         // remove zombie
-                        this.app.stage.removeChild(this.zombies[j]);
+                        this.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
                     } else {
                         // downward blood splat decal
@@ -111,7 +138,7 @@ export default class World {
 
                     // remove projectile
                     // TODO: apply impulse to zombie on impact
-                    this.app.stage.removeChild(this.projectiles[i]);
+                    this.removeChild(this.projectiles[i]);
                     this.projectiles.splice(i, 1);
                     break;
                 }
@@ -125,7 +152,7 @@ export default class World {
         let newZombie = new Zombie(randomSpawn.x, randomSpawn.y, this.player.angleBetween(randomSpawn) + Math.PI);
         newZombie.setTargetFunc(() => (this.player.position));
         this.zombies.push(newZombie);
-        this.app.stage.addChild(newZombie);
+        this.addChild(newZombie);
     }
 
     endGame() {
@@ -134,8 +161,8 @@ export default class World {
         // set all zombies to an idle routine to leave the level bounds
         for (let zombie of this.zombies) {
             let randRadius = Util.RandomInt(0, 360) * Math.PI / 180;
-            let targetX = Math.cos(randRadius) * this.app.screen.width * 1.2;
-            let targetY = Math.sin(randRadius) * this.app.screen.width * 1.2;
+            let targetX = Math.cos(randRadius) * 1000 * 1.2;
+            let targetY = Math.sin(randRadius) * 1000 * 1.2;
             zombie.setTargetFunc(() => {
                 return {x: targetX, y: targetY};
             });
