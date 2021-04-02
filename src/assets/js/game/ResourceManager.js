@@ -37,6 +37,9 @@ export function Load(completedCallback) {
         .add('flesh_explode_2', 'game/sounds/flesh_explode/gib_body_explode_02.wav')
         .add('flesh_explode_3', 'game/sounds/flesh_explode/gib_body_explode_03.wav')
         .add('flesh_explode_4', 'game/sounds/flesh_explode/gib_body_explode_09.wav')
+        .add('walk_grass_1', 'game/sounds/walk_grass/step_sprint_grass_short_r_01.wav')
+        .add('walk_grass_2', 'game/sounds/walk_grass/step_sprint_grass_short_r_02.wav')
+        .add('walk_grass_3', 'game/sounds/walk_grass/step_sprint_grass_short_r_03.wav')
         .load(function () {
             // generate frames from sprite sheets
             LoadFramesFromTexture('player', 3);

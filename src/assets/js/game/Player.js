@@ -22,6 +22,7 @@ export default class Player extends Entity {
         this.rotation = Math.PI * 1.5;
         this.speed = 1.2;
         this.alive = true;
+        this.playingWalkingSound = false;
         this.armoury = new Weapon.Armoury();
         this.armoury.addWeapon(new Weapon.Pistol());
         this.armoury.addWeapon(new Weapon.AssaultRifle());
@@ -48,6 +49,17 @@ export default class Player extends Entity {
             yv = -1;
         } else if (Input.isKeyPressed(Input.KeyS) || Input.isKeyPressed(Input.KeyDown)) {
             yv = 1;
+        }
+
+        if (xv !== 0 || yv !== 0) {
+            if (!this.playingWalkingSound) {
+                this.playingWalkingSound = true;
+                ResourceManager.PlaySound("walk_grass_" + Util.RandomInt(1, 3));
+
+                setTimeout(() => {
+                    this.playingWalkingSound = false;
+                }, 450);
+            }
         }
 
         this.position.set(this.position.x + xv * delta * this.speed, this.position.y + yv * delta * this.speed);
@@ -172,7 +184,6 @@ export default class Player extends Entity {
             // move ammo from armoury to weapon
             this.armoury.ammo[this.armoury.equipped.ammoType].count -= diff;
             this.armoury.equipped.ammoLoaded += diff;
-
             this.armoury.equipped.state = Weapon.IdleState;
         }, this.armoury.equipped.reloadDuration);
     }
