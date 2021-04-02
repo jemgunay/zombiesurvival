@@ -1,12 +1,15 @@
+import * as ResourceManager from "./ResourceManager";
+
 export const SemiAutoTrigger = "semi";
 export const AutoTrigger = "auto";
 
 export const IdleState = "idle";
 export const ShootingState = "shooting";
 export const EmptyBarrelState = "empty_barrel";
+export const EmptyClipState = "empty_clip";
 export const ReloadingState = "reloading";
 
-export let PistolAmmo = "pistol_ammo";
+export const PistolAmmo = "pistol_ammo";
 export const RifleAmmo = "rifle_ammo";
 export const ShotgunAmmo = "shotgun_ammo";
 
@@ -30,6 +33,8 @@ export class Armoury {
         }
         this.weapons = [];
         this.equipped = null;
+        this.equippedIndex = null;
+        this.switching = false;
     }
 
     addWeapon(weapon) {
@@ -41,13 +46,23 @@ export class Armoury {
     }
 
     equip(slotIndex) {
-        if (slotIndex > this.weapons.length - 1) {
+        if (slotIndex > this.weapons.length - 1 || this.switching) {
             return;
         }
         if (this.equipped !== null && this.equipped.state !== IdleState) {
             return;
         }
+        if (this.equippedIndex === slotIndex) {
+            return;
+        }
+        this.equippedIndex = slotIndex;
         this.equipped = this.weapons[slotIndex];
+        ResourceManager.PlaySound("change_weapon");
+        
+        this.switching = true;
+        setTimeout(() => {
+            this.switching = false;
+        }, 500);
     }
 }
 
@@ -65,6 +80,9 @@ export class Weapon {
         this.idleFrame = 0;
         this.shootFrame = 0;
         this.state = IdleState;
+        this.attackSounds = [];
+        this.reloadSound = "";
+        this.emptySound = "";
 
         // if starting loaded ammo not specified, provide a full clip by default
         if (!properties.ammoLoaded) {
@@ -77,7 +95,7 @@ export class Weapon {
 export class Pistol extends Weapon {
     constructor() {
         super({
-            name: "pistol",
+            name: "1911_pistol",
             trigger: SemiAutoTrigger,
             shootDuration: 250,
             reloadDuration: 2000,
@@ -87,6 +105,12 @@ export class Pistol extends Weapon {
             ammoType: PistolAmmo,
             idleFrame: 0,
             shootFrame: 1,
+            attackSounds: [
+                "1911_pistol_shoot_1",
+                "1911_pistol_shoot_2",
+            ],
+            reloadSound: "",
+            emptySound: "pistol_empty",
         });
     }
 }
@@ -94,7 +118,7 @@ export class Pistol extends Weapon {
 export class AssaultRifle extends Weapon {
     constructor() {
         super({
-            name: "assault_rifle",
+            name: "carbine_rifle",
             trigger: AutoTrigger,
             shootDuration: 150,
             reloadDuration: 2000,
@@ -104,6 +128,12 @@ export class AssaultRifle extends Weapon {
             ammoType: RifleAmmo,
             idleFrame: 0,
             shootFrame: 1,
+            attackSounds: [
+                "carbine_rifle_shoot_1",
+                "carbine_rifle_shoot_2",
+            ],
+            reloadSound: "",
+            emptySound: "rifle_empty",
         });
     }
 }
@@ -111,7 +141,7 @@ export class AssaultRifle extends Weapon {
 export class Shotgun extends Weapon {
     constructor() {
         super({
-            name: "shotgun",
+            name: "model_680_shotgun",
             trigger: SemiAutoTrigger,
             shootDuration: 800,
             reloadDuration: 2000,
@@ -121,6 +151,12 @@ export class Shotgun extends Weapon {
             ammoType: ShotgunAmmo,
             idleFrame: 0,
             shootFrame: 1,
+            attackSounds: [
+                "romeo_shotgun_shoot_1",
+                "romeo_shotgun_shoot_2",
+            ],
+            reloadSound: "",
+            emptySound: "rifle_empty",
         });
     }
 }

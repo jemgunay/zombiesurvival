@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+import 'pixi-sound';
 
 let frameStore = {};
 
@@ -6,16 +7,24 @@ let frameStore = {};
 export function Load(completedCallback) {
     PIXI.Loader.shared
         // sprite sheets
-        .add('player', 'game/images/player.json')
-        .add('zombie_legs', 'game/images/zombie_legs.json')
-        .add('zombie_torso', 'game/images/zombie_torso.json')
-        .add('large_zombie_torso', 'game/images/large_zombie_torso.json')
+        .add('player', 'game/images/sprite_sheets/player.json')
+        .add('zombie_legs', 'game/images/sprite_sheets/zombie_legs.json')
+        .add('zombie_torso', 'game/images/sprite_sheets/zombie_torso.json')
+        .add('large_zombie_torso', 'game/images/sprite_sheets/large_zombie_torso.json')
         // static images
         .add('grass', 'game/images/grass.jpg')
         .add('directional_blood_splat', 'game/images/directional_blood_splat.png')
         .add('downward_blood_splat', 'game/images/downward_blood_splat.png')
         // sounds
-        //.add('bird', 'game/sounds/pistol.mp3')
+        .add('1911_pistol_shoot_1', 'game/sounds/1911_pistol/weap_mike1911_fire_plr_01.wav')
+        .add('1911_pistol_shoot_2', 'game/sounds/1911_pistol/weap_mike1911_fire_plr_02.wav')
+        .add('carbine_rifle_shoot_1', 'game/sounds/mk2_carbine/weap_sbeta_sup_npc_01.wav')
+        .add('carbine_rifle_shoot_2', 'game/sounds/mk2_carbine/weap_sbeta_sup_npc_02.wav')
+        .add('romeo_shotgun_shoot_1', 'game/sounds/romeo_shotgun/weap_romeo870_fire_npc_01.wav')
+        .add('romeo_shotgun_shoot_2', 'game/sounds/romeo_shotgun/weap_romeo870_fire_npc_06.wav')
+        .add('pistol_empty', 'game/sounds/weap_dryfire_pistol.wav')
+        .add('rifle_empty', 'game/sounds/weap_dryfire_rifle.wav')
+        .add('change_weapon', 'game/sounds/weap_raise_gen_02.wav')
         .load(function () {
             // generate frames from sprite sheets
             LoadFramesFromTexture('player', 3);
@@ -24,6 +33,9 @@ export function Load(completedCallback) {
             LoadFramesFromTexture('large_zombie_torso', 19);
             completedCallback();
         });
+
+    // PIXI.sound.add('shot', 'game/sounds/1911_pistol/weap_mike1911_fire_plr_01.wav');
+    // PIXI.sound.play('shot');
 }
 
 // loads N frames from a given sprite sheet and stores them.
@@ -60,4 +72,8 @@ export function GetFrames(prefix) {
         return
     }
     return frameStore[prefix];
+}
+
+export function PlaySound(name) {
+    PIXI.Loader.shared.resources[name].sound.play();
 }

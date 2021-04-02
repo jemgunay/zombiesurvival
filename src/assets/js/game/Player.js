@@ -78,12 +78,33 @@ export default class Player extends Entity {
     }
 
     attack() {
-        if (this.armoury.equipped.state !== Weapon.IdleState || this.armoury.equipped.ammoLoaded === 0) {
+        if (this.armoury.equipped.state !== Weapon.IdleState) {
+            return [];
+        }
+        // no ammo left in clip
+        if (this.armoury.equipped.ammoLoaded === 0) {
+            // play empty clip sound
+            this.armoury.equipped.state = Weapon.EmptyClipState;
+            if (this.armoury.equipped.emptySound !== '') {
+                ResourceManager.PlaySound(this.armoury.equipped.emptySound);
+            }
+            setTimeout(() => {
+                if (this.alive && this.armoury.equipped.state === Weapon.EmptyClipState) {
+                    this.armoury.equipped.state = Weapon.IdleState;
+                }
+            }, this.armoury.equipped.shootDuration);
             return [];
         }
         this.armoury.equipped.state = Weapon.ShootingState;
         this.sprite.gotoAndStop(this.armoury.equipped.shootFrame);
         this.armoury.equipped.ammoLoaded--;
+
+        // play random attack sound
+        if (this.armoury.equipped.attackSounds.length > 0) {
+            let randSoundIndex = Util.RandomInt(0, this.armoury.equipped.attackSounds.length - 1);
+            let randSound = this.armoury.equipped.attackSounds[randSoundIndex];
+            ResourceManager.PlaySound(randSound);
+        }
 
         // reset to idle frame
         setTimeout(() => {
@@ -144,6 +165,8 @@ export default class Player extends Entity {
         } else {
             diff = this.armoury.ammo[this.armoury.equipped.ammoType].count;
         }
+
+        // TODO: start reload sound
 
         setTimeout(() => {
             // move ammo from armoury to weapon
