@@ -31,14 +31,6 @@ export default class World extends PIXI.Container {
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
         this.addChild(this.player);
 
-        // create spawn points
-        this.spawnPoints = [
-            {x: 50, y: 50},
-            {x: 50, y: app.screen.height - 50},
-            {x: app.screen.width - 50, y: 50},
-            {x: app.screen.width - 50, y: app.screen.height - 50},
-        ];
-
         // create levels
         this.levelManager = new LevelManager();
         this.levelManager.next();
@@ -123,6 +115,9 @@ export default class World extends PIXI.Container {
             for (let j = this.zombies.length - 1; j >= 0; j--) {
                 if (this.zombies[j].hitTestCircle(this.projectiles[i])) {
                     if (this.zombies[j].applyDamage(this.projectiles[i].damage)) {
+                        // play flesh exploding sound
+                        ResourceManager.PlaySound("flesh_explode_" + Util.RandomInt(1, 4));
+
                         // directional  blood splat decal
                         let newSplat = new Decal.NewDirectionalBlood(this.zombies[j].x, this.zombies[j].y, this.zombies[j].rotation);
                         this.decalContainer.addChild(newSplat);
@@ -131,6 +126,9 @@ export default class World extends PIXI.Container {
                         this.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
                     } else {
+                        // play bullet impact sound
+                        ResourceManager.PlaySound("flesh_impact_" + Util.RandomInt(1, 8));
+
                         // downward blood splat decal
                         let newSplat = new Decal.NewDownwardBlood(this.zombies[j].x, this.zombies[j].y);
                         this.decalContainer.addChild(newSplat);
@@ -148,9 +146,18 @@ export default class World extends PIXI.Container {
 
     spawnZombie() {
         // create zombie
-        let randomSpawn = this.spawnPoints[Util.RandomInt(0, this.spawnPoints.length - 1)];
-        let newZombie = new Zombie(randomSpawn.x, randomSpawn.y, this.player.angleBetween(randomSpawn) + Math.PI);
-        newZombie.setTargetFunc(() => (this.player.position));
+        let randRadius = Util.DegToRad(Util.RandomInt(0, 360));
+        let spawnPos = {
+            x: this.player.position.x + (Math.cos(randRadius) * 450),
+            y: this.player.position.y + (Math.sin(randRadius) * 450),
+        };
+        let newZombie = new Zombie(spawnPos.x, spawnPos.y, this.player.angleBetween(spawnPos) + Math.PI);
+        if (this.player.alive) {
+            newZombie.setTargetFunc(() => (this.player.position));
+        } else {
+            const newTarget = this.randomPositionOffScreen();
+            newZombie.setTargetFunc(() => (newTarget));
+        }
         this.zombies.push(newZombie);
         this.addChild(newZombie);
     }
@@ -160,12 +167,18 @@ export default class World extends PIXI.Container {
 
         // set all zombies to an idle routine to leave the level bounds
         for (let zombie of this.zombies) {
-            let randRadius = Util.RandomInt(0, 360) * Math.PI / 180;
-            let targetX = Math.cos(randRadius) * 1000 * 1.2;
-            let targetY = Math.sin(randRadius) * 1000 * 1.2;
+            const newTarget = this.randomPositionOffScreen();
             zombie.setTargetFunc(() => {
-                return {x: targetX, y: targetY};
+                return newTarget;
             });
+        }
+    }
+
+    randomPositionOffScreen() {
+        let randRadius = Util.DegToRad(Util.RandomInt(0, 360));
+        return {
+            x: this.player.position.x + Math.cos(randRadius) * 1000,
+            y: this.player.position.y + Math.sin(randRadius) * 1000,
         }
     }
 }

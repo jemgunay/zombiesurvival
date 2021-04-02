@@ -58,7 +58,7 @@ export class Armoury {
         this.equippedIndex = slotIndex;
         this.equipped = this.weapons[slotIndex];
         ResourceManager.PlaySound("change_weapon");
-        
+
         this.switching = true;
         setTimeout(() => {
             this.switching = false;

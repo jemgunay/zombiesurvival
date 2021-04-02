@@ -17,13 +17,9 @@ npm run lint
 ### Features
 
 * Apply impulse to zombie on impact
-* Camera view of world
+* World boundary
 * Sounds
-    * Shoot
     * Reload
-    * Empty clip - weap_dryfire_rifle.wav
-    * Bullet flesh impact
-    * Death gib sounds
     * Walk on grass
     * Zombie moans
     * Ambient sounds

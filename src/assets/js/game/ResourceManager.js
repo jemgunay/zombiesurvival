@@ -25,6 +25,18 @@ export function Load(completedCallback) {
         .add('pistol_empty', 'game/sounds/weap_dryfire_pistol.wav')
         .add('rifle_empty', 'game/sounds/weap_dryfire_rifle.wav')
         .add('change_weapon', 'game/sounds/weap_raise_gen_02.wav')
+        .add('flesh_impact_1', 'game/sounds/flesh_impact/blt_imp_flesh_lyr_plr_10.wav')
+        .add('flesh_impact_2', 'game/sounds/flesh_impact/blt_imp_flesh_plr_04.wav')
+        .add('flesh_impact_3', 'game/sounds/flesh_impact/blt_imp_flesh_plr_05.wav')
+        .add('flesh_impact_4', 'game/sounds/flesh_impact/blt_imp_flesh_plr_11.wav')
+        .add('flesh_impact_5', 'game/sounds/flesh_impact/bullet_flesh_head_npc_02.wav')
+        .add('flesh_impact_6', 'game/sounds/flesh_impact/bullet_flesh_head_npc_03.wav')
+        .add('flesh_impact_7', 'game/sounds/flesh_impact/bullet_flesh_head_npc_04.wav')
+        .add('flesh_impact_8', 'game/sounds/flesh_impact/bullet_flesh_head_npc_05.wav')
+        .add('flesh_explode_1', 'game/sounds/flesh_explode/gib_body_explode_01.wav')
+        .add('flesh_explode_2', 'game/sounds/flesh_explode/gib_body_explode_02.wav')
+        .add('flesh_explode_3', 'game/sounds/flesh_explode/gib_body_explode_03.wav')
+        .add('flesh_explode_4', 'game/sounds/flesh_explode/gib_body_explode_09.wav')
         .load(function () {
             // generate frames from sprite sheets
             LoadFramesFromTexture('player', 3);
