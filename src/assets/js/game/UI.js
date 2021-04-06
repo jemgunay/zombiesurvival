@@ -1,6 +1,19 @@
 import * as PIXI from "pixi.js";
 import {Game} from "./Game";
 
+const numericLookup = {
+    1: "st",
+    2: "nd",
+    3: "rd",
+    4: "th",
+    5: "th",
+    6: "th",
+    7: "th",
+    8: "th",
+    9: "th",
+    10: "th",
+}
+
 export default class UI extends PIXI.Container {
     constructor() {
         super();
@@ -12,9 +25,10 @@ export default class UI extends PIXI.Container {
         });
 
         // create level text
-        this.roundText = new PIXI.Text("Round 1", textStyle);
+        this.roundText = new PIXI.Text("", textStyle);
         this.roundText.x = 20;
         this.roundText.y = 20;
+        this.setRoundText(1);
         this.addChild(this.roundText);
 
         // create ammo text
@@ -26,7 +40,7 @@ export default class UI extends PIXI.Container {
     }
 
     setRoundText(round) {
-        this.roundText.text = "Round " + round;
+        this.roundText.text = round + numericLookup[round] + " Wave";
     }
 
     setAmmoText(loaded, unloaded) {
