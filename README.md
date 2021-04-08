@@ -1,5 +1,7 @@
 # Zombie Survival
 
+Survive as many waves of zombies as you can... [Play here!](https://jemgunay.co.uk/zombiesurvival)
+
 ## Usage
 
 ```bash
@@ -16,14 +18,15 @@ npm run lint
 
 ### Features
 
-* Apply impulse to zombie on impact
-* World boundary
+* World design & boundary
 * Sounds
     * Reload
-    * Walk on grass
     * Zombie moans
     * Ambient sounds
+* Fat zombies
+* Ammo drops
 * Zombie font
+* Apply impulse to zombie on impact
 
 ### Bugs
 

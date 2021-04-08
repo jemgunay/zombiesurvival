@@ -6,6 +6,7 @@ import LevelManager from "./LevelManager";
 import * as ResourceManager from "./ResourceManager";
 import Zombie from "./Zombie";
 import * as Decal from "./Decal";
+import {Game} from "./Game";
 
 export default class World extends PIXI.Container {
     constructor(app) {
@@ -115,17 +116,22 @@ export default class World extends PIXI.Container {
             for (let j = this.zombies.length - 1; j >= 0; j--) {
                 if (this.zombies[j].hitTestCircle(this.projectiles[i])) {
                     if (this.zombies[j].applyDamage(this.projectiles[i].damage)) {
+                        // zombie died
                         // play flesh exploding sound
                         ResourceManager.PlaySound("flesh_explode_" + Util.RandomInt(1, 4));
 
-                        // directional  blood splat decal
+                        // directional blood splat decal
                         let newSplat = new Decal.NewDirectionalBlood(this.zombies[j].x, this.zombies[j].y, this.zombies[j].rotation);
                         this.decalContainer.addChild(newSplat);
 
                         // remove zombie
                         this.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
+
+                        // update kill counter
+                        Game.ui.incrementKillCounter();
                     } else {
+                        // zombie took damage, but didn't die
                         // play bullet impact sound
                         ResourceManager.PlaySound("flesh_impact_" + Util.RandomInt(1, 8));
 
