@@ -35,12 +35,25 @@ export default class UI extends PIXI.Container {
         this.ammoText = new PIXI.Text("", textStyle);
         this.addChild(this.ammoText);
 
+        // create ammo text
+        this.killCountText = new PIXI.Text("", textStyle);
+        this.killCount = -1;
+        this.incrementKillCounter();
+        this.addChild(this.killCountText);
+
         // move to front
         this.zIndex = 10;
     }
 
     setRoundText(round) {
         this.roundText.text = round + numericLookup[round] + " Wave";
+    }
+
+    incrementKillCounter() {
+        this.killCount++
+        this.killCountText.text = this.killCount + " Kills";
+        this.killCountText.x = Game.app.screen.width - this.killCountText.width - 20;
+        this.killCountText.y = 20;
     }
 
     setAmmoText(loaded, unloaded) {

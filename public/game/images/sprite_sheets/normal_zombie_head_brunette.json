@@ -1,0 +1,163 @@
+﻿{"frames": {
+
+"normal_zombie_head_brunette0000":
+{
+	"frame": {"x":0,"y":0,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0001":
+{
+	"frame": {"x":20,"y":0,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0002":
+{
+	"frame": {"x":40,"y":0,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0003":
+{
+	"frame": {"x":60,"y":0,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0004":
+{
+	"frame": {"x":80,"y":0,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0005":
+{
+	"frame": {"x":100,"y":0,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0006":
+{
+	"frame": {"x":0,"y":23,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0007":
+{
+	"frame": {"x":20,"y":23,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0008":
+{
+	"frame": {"x":40,"y":23,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0009":
+{
+	"frame": {"x":60,"y":23,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0010":
+{
+	"frame": {"x":80,"y":23,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0011":
+{
+	"frame": {"x":100,"y":23,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0012":
+{
+	"frame": {"x":0,"y":46,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0013":
+{
+	"frame": {"x":20,"y":46,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0014":
+{
+	"frame": {"x":40,"y":46,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0015":
+{
+	"frame": {"x":60,"y":46,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0016":
+{
+	"frame": {"x":80,"y":46,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0017":
+{
+	"frame": {"x":100,"y":46,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+},
+"normal_zombie_head_brunette0018":
+{
+	"frame": {"x":0,"y":69,"w":20,"h":23},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":23},
+	"sourceSize": {"w":20,"h":23}
+}},
+"meta": {
+	"app": "Adobe Animate",
+	"version": "15.2.0.66",
+	"image": "normal_zombie_head_brunette.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":128},
+	"scale": "1"
+}
+}

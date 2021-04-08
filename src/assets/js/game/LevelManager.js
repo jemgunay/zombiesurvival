@@ -30,7 +30,6 @@ export default class LevelManager {
         }
         this.currentLevelNum++;
         this.currentLevel = this.levels[this.currentLevelNum-1];
-        console.log("starting level", this.currentLevelNum);
         Game.ui.setRoundText(this.currentLevelNum);
         this.tick();
     }

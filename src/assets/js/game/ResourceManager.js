@@ -8,9 +8,17 @@ export function Load(completedCallback) {
     PIXI.Loader.shared
         // sprite sheets
         .add('player', 'game/images/sprite_sheets/player.json')
-        .add('zombie_legs', 'game/images/sprite_sheets/zombie_legs.json')
-        .add('zombie_torso', 'game/images/sprite_sheets/zombie_torso.json')
-        .add('large_zombie_torso', 'game/images/sprite_sheets/large_zombie_torso.json')
+        .add('normal_zombie_head_brunette', 'game/images/sprite_sheets/normal_zombie_head_brunette.json')
+        .add('normal_zombie_head_blonde', 'game/images/sprite_sheets/normal_zombie_head_blonde.json')
+        .add('normal_zombie_head_ginger', 'game/images/sprite_sheets/normal_zombie_head_ginger.json')
+        .add('normal_zombie_torso_blue', 'game/images/sprite_sheets/normal_zombie_torso_blue.json')
+        .add('normal_zombie_torso_green', 'game/images/sprite_sheets/normal_zombie_torso_green.json')
+        .add('normal_zombie_torso_orange', 'game/images/sprite_sheets/normal_zombie_torso_orange.json')
+        .add('normal_zombie_torso_purple', 'game/images/sprite_sheets/normal_zombie_torso_purple.json')
+        .add('normal_zombie_torso_grey', 'game/images/sprite_sheets/normal_zombie_torso_grey.json')
+        .add('normal_zombie_torso_red', 'game/images/sprite_sheets/normal_zombie_torso_red.json')
+        .add('normal_zombie_arms', 'game/images/sprite_sheets/normal_zombie_arms.json')
+        .add('normal_zombie_legs', 'game/images/sprite_sheets/normal_zombie_legs.json')
         // static images
         .add('grass', 'game/images/grass.jpg')
         .add('directional_blood_splat', 'game/images/directional_blood_splat.png')
@@ -43,21 +51,26 @@ export function Load(completedCallback) {
         .load(function () {
             // generate frames from sprite sheets
             LoadFramesFromTexture('player', 3);
-            LoadFramesFromTexture('zombie_legs', 17);
-            LoadFramesFromTexture('zombie_torso', 17);
-            LoadFramesFromTexture('large_zombie_torso', 19);
+            LoadFramesFromTexture('normal_zombie_head_brunette', 19);
+            LoadFramesFromTexture('normal_zombie_head_blonde', 19);
+            LoadFramesFromTexture('normal_zombie_head_ginger', 19);
+            LoadFramesFromTexture('normal_zombie_torso_blue', 19);
+            LoadFramesFromTexture('normal_zombie_torso_green', 19);
+            LoadFramesFromTexture('normal_zombie_torso_orange', 19);
+            LoadFramesFromTexture('normal_zombie_torso_purple', 19);
+            LoadFramesFromTexture('normal_zombie_torso_grey', 19);
+            LoadFramesFromTexture('normal_zombie_torso_red', 19);
+            LoadFramesFromTexture('normal_zombie_arms', 19);
+            LoadFramesFromTexture('normal_zombie_legs', 33);
             completedCallback();
         });
-
-    // PIXI.sound.add('shot', 'game/sounds/1911_pistol/weap_mike1911_fire_plr_01.wav');
-    // PIXI.sound.play('shot');
 }
 
 // loads N frames from a given sprite sheet and stores them.
-export function LoadFramesFromTexture(prefix, frameCount) {
+export function LoadFramesFromTexture(prefix, endFrame) {
     let frames = [];
     let num = ''
-    for (let i = 0; i < frameCount; i++) {
+    for (let i = 0; i < endFrame; i++) {
         if (i > 99) {
             num = `0${i}`
         } else if (i > 9) {
@@ -65,7 +78,7 @@ export function LoadFramesFromTexture(prefix, frameCount) {
         } else {
             num = `000${i}`
         }
-        frames.push(PIXI.Texture.from(prefix + `_` + num));
+        frames.push(PIXI.Texture.from(prefix + num));
     }
     frameStore[prefix] = frames;
 }

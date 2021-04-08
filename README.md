@@ -21,13 +21,11 @@ npm run lint
 * World design & boundary
 * Sounds
     * Reload
-    * Walk on grass
     * Zombie moans
     * Ambient sounds
 * Fat zombies
 * Ammo drops
 * Zombie font
-* Kill counter
 * Apply impulse to zombie on impact
 
 ### Bugs

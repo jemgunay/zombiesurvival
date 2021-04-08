@@ -3,23 +3,42 @@ import * as ResourceManager from "./ResourceManager";
 import {Entity} from "./Entity";
 import * as Util from "./Util";
 
+const torsoColours = ["blue", "green", "orange", "purple", "grey", "red"];
+const hairColours = ["brunette", "blonde", "ginger"];
+
 export default class Zombie extends Entity {
     constructor(x, y, rotation) {
         super(20);
 
         // legs
-        let legsSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_legs"));
-        legsSprite.anchor.set(0.5);
+        let legsSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("normal_zombie_legs"));
+        legsSprite.anchor.set(0.5, 0.55);
         legsSprite.angle = 90;
         legsSprite.play();
         this.addChild(legsSprite);
 
+        // arms
+        let armsSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("normal_zombie_arms"));
+        armsSprite.anchor.set(0.5, 0.92);
+        armsSprite.angle = 90;
+        armsSprite.play();
+        this.addChild(armsSprite);
+
         // torso
-        let torsoSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("zombie_torso"));
+        const randTorsoColour = torsoColours[Util.RandomInt(0, torsoColours.length-1)];
+        let torsoSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("normal_zombie_torso_" + randTorsoColour));
         torsoSprite.anchor.set(0.5);
         torsoSprite.angle = 90;
         torsoSprite.play();
         this.addChild(torsoSprite);
+
+        // head
+        const randHairColour = hairColours[Util.RandomInt(0, hairColours.length-1)];
+        let headSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("normal_zombie_head_" + randHairColour));
+        headSprite.anchor.set(0.53, 0.5);
+        headSprite.angle = 90;
+        headSprite.play();
+        this.addChild(headSprite);
 
         // container
         this.position.set(x, y);
@@ -38,7 +57,9 @@ export default class Zombie extends Entity {
 
     setTargetSpeed(speed) {
         this.targetSpeed = speed;
-        for (let i = 0; i < this.children.length; i++) {
+        // make leg animation faster than other sprites
+        this.children[0].animationSpeed = speed * 0.6;
+        for (let i = 1; i < this.children.length; i++) {
             this.children[i].animationSpeed = speed * 0.4;
         }
     }
