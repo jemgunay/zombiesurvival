@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import * as Input from "./Input";
 import {Entity} from "./Entity";
 import * as Weapon from "./Weapon";
-import Projectile from "./Projectile";
+import * as Projectile from "./Projectile";
 import * as ResourceManager from "./ResourceManager";
 import * as Util from "./Util";
 import {Game} from "./Game";
@@ -141,13 +141,14 @@ export default class Player extends Entity {
             if (Util.RandomBool()) {
                 rotationOffset *= -1;
             }
-            let newProjectile = new Projectile(
+            let newProjectile = new Projectile.Projectile(
                 this.position.x,
                 this.position.y,
                 this.rotation + Util.DegToRad(rotationOffset),
                 this.armoury.ammo[this.armoury.equipped.ammoType].projectileDamage,
                 this.armoury.ammo[this.armoury.equipped.ammoType].projectileSpeed,
             );
+
             projectiles.push(newProjectile);
         }
         return projectiles;

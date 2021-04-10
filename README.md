@@ -30,5 +30,4 @@ npm run lint
 
 ### Bugs
 
-* Destroy bullets after timeout
 * Fix zombie rotation issue

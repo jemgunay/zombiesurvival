@@ -25,7 +25,7 @@ export default class Zombie extends Entity {
         this.addChild(armsSprite);
 
         // torso
-        const randTorsoColour = torsoColours[Util.RandomInt(0, torsoColours.length-1)];
+        const randTorsoColour = torsoColours[Util.RandomInt(0, torsoColours.length - 1)];
         let torsoSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("normal_zombie_torso_" + randTorsoColour));
         torsoSprite.anchor.set(0.5);
         torsoSprite.angle = 90;
@@ -33,7 +33,7 @@ export default class Zombie extends Entity {
         this.addChild(torsoSprite);
 
         // head
-        const randHairColour = hairColours[Util.RandomInt(0, hairColours.length-1)];
+        const randHairColour = hairColours[Util.RandomInt(0, hairColours.length - 1)];
         let headSprite = new PIXI.AnimatedSprite(ResourceManager.GetFrames("normal_zombie_head_" + randHairColour));
         headSprite.anchor.set(0.53, 0.5);
         headSprite.angle = 90;
