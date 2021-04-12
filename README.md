@@ -27,7 +27,10 @@ npm run lint
 * Ammo drops
 * Zombie font
 * Apply impulse to zombie on impact
+* Player sprites for weapons
+* Spawn bullets on tip of gun
 
 ### Bugs
 
-* Fix zombie rotation issue
+* Broken fence posts in front of player
+* Fix zombie rotation issue (travel clockwise around zombie and they ping to face anticlockwise)

@@ -19,7 +19,11 @@ export default class LevelManager {
             {
                 zombieCount: 28,
                 spawnTime: {min: 800, max: 1100}
-            }
+            },
+            {
+                zombieCount: 35,
+                spawnTime: {min: 400, max: 700}
+            },
         ];
         this.currentLevelNum = 0;
     }

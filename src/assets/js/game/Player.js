@@ -38,16 +38,17 @@ export default class Player extends Entity {
             return;
         }
 
+        // move player but prevent leaving world bounds
         let xv = 0;
         let yv = 0;
-        if (Input.isKeyPressed(Input.KeyA) || Input.isKeyPressed(Input.KeyLeft)) {
+        if ((Input.isKeyPressed(Input.KeyA) || Input.isKeyPressed(Input.KeyLeft)) && this.position.x > -16) {
             xv = -1;
-        } else if (Input.isKeyPressed(Input.KeyD) || Input.isKeyPressed(Input.KeyRight)) {
+        } else if ((Input.isKeyPressed(Input.KeyD) || Input.isKeyPressed(Input.KeyRight)) && this.position.x < 900) {
             xv = 1;
         }
-        if (Input.isKeyPressed(Input.KeyW) || Input.isKeyPressed(Input.KeyUp)) {
+        if ((Input.isKeyPressed(Input.KeyW) || Input.isKeyPressed(Input.KeyUp)) && this.position.y > -90) {
             yv = -1;
-        } else if (Input.isKeyPressed(Input.KeyS) || Input.isKeyPressed(Input.KeyDown)) {
+        } else if ((Input.isKeyPressed(Input.KeyS) || Input.isKeyPressed(Input.KeyDown)) && this.position.y < 690) {
             yv = 1;
         }
 

@@ -97,7 +97,7 @@ export class Pistol extends Weapon {
         super({
             name: "1911_pistol",
             trigger: SemiAutoTrigger,
-            shootDuration: 250,
+            shootDuration: 190,
             reloadDuration: 2000,
             ammoCapacity: 10,
             projectilesPerShot: 1,

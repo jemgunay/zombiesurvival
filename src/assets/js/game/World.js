@@ -17,13 +17,22 @@ export default class World extends PIXI.Container {
         this.sortableChildren = true;
         this.zombies = [];
         this.projectileManager = new Projectile.Manager(this);
+
+        // tiled grass
         let groundSprite = new PIXI.TilingSprite(
-            ResourceManager.GetTexture('grass'),
-            app.screen.width * 2,
-            app.screen.height * 2,
+            ResourceManager.GetTexture("grass"),
+            app.screen.width * 4,
+            app.screen.height * 4,
         );
         groundSprite.anchor.set(0.25);
+        groundSprite.position.set(-app.screen.width/2, -app.screen.height/2);
         this.addChild(groundSprite);
+        // farm border bottom
+        let worldMapSpriteBottom = ResourceManager.GetSprite("farm_border_bottom");
+        worldMapSpriteBottom.anchor.set(0.25);
+        worldMapSpriteBottom.position.set(-app.screen.width/2, -app.screen.height/2);
+        this.addChild(worldMapSpriteBottom);
+        // blood decals
         // TODO: use ParticleContainers for decals (one container per texture required)
         this.decalContainer = new PIXI.Container();
         this.addChild(this.decalContainer);
@@ -31,6 +40,16 @@ export default class World extends PIXI.Container {
         // create player
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
         this.addChild(this.player);
+
+        // zombie layer
+        this.zombieContainer = new PIXI.Container();
+        this.addChild(this.zombieContainer);
+
+        // farm border
+        let worldMapSpriteTop = ResourceManager.GetSprite("farm_border_top");
+        worldMapSpriteTop.anchor.set(0.25);
+        worldMapSpriteTop.position.set(-app.screen.width/2, -app.screen.height/2);
+        this.addChild(worldMapSpriteTop);
 
         // create levels
         this.levelManager = new LevelManager();
@@ -80,8 +99,8 @@ export default class World extends PIXI.Container {
         // make camera follow player
         let playerPos = this.player.getGlobalPosition();
         let cameraVel = {
-            x: Math.abs(playerPos.x - this.app.screen.width / 2) * 0.1,
-            y: Math.abs(playerPos.y - this.app.screen.height / 2) * 0.1,
+            x: Math.abs(playerPos.x - this.app.screen.width / 2) * 0.05,
+            y: Math.abs(playerPos.y - this.app.screen.height / 2) * 0.05,
         };
         if (cameraVel.x < 0.05) {
             cameraVel.x = 0;
@@ -124,7 +143,7 @@ export default class World extends PIXI.Container {
                         this.decalContainer.addChild(newSplat);
 
                         // remove zombie
-                        this.removeChild(this.zombies[j]);
+                        this.zombieContainer.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
 
                         // update kill counter
@@ -162,7 +181,7 @@ export default class World extends PIXI.Container {
             newZombie.setTargetFunc(() => (newTarget));
         }
         this.zombies.push(newZombie);
-        this.addChild(newZombie);
+        this.zombieContainer.addChild(newZombie);
     }
 
     endGame() {
