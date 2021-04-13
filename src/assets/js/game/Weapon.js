@@ -64,6 +64,22 @@ export class Armoury {
             this.switching = false;
         }, 500);
     }
+
+    equipPrevious() {
+        if (this.equippedIndex === 0) {
+            this.equip(this.weapons.length-1);
+            return;
+        }
+        this.equip(this.equippedIndex-1);
+    }
+
+    equipNext() {
+        if (this.equippedIndex === this.weapons.length-1) {
+            this.equip(0);
+            return;
+        }
+        this.equip(this.equippedIndex+1);
+    }
 }
 
 export class Weapon {

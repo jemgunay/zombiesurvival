@@ -1,18 +1,20 @@
 // handle keyboard input
-export const KeyA = 'a';
-export const KeyD = 'd';
-export const KeyW = 'w';
-export const KeyS = 's';
-export const KeyR = 'r';
+export const KeyA = 'A';
+export const KeyD = 'D';
+export const KeyW = 'W';
+export const KeyS = 'S';
+export const KeyR = 'R';
+export const KeyQ = 'Q';
+export const KeyE = 'E';
 export const Key1 = '1';
 export const Key2 = '2';
 export const Key3 = '3';
 export const Key4 = '4';
 export const Key5 = '5';
-export const KeyLeft = 'ArrowLeft';
-export const KeyRight = 'ArrowRight';
-export const KeyUp = 'ArrowUp';
-export const KeyDown = 'ArrowDown';
+export const KeyLeft = 'ARROWLEFT';
+export const KeyRight = 'ARROWRIGHT';
+export const KeyUp = 'ARROWUP';
+export const KeyDown = 'ARROWDOWN';
 
 let keyLookup = {};
 
@@ -39,12 +41,12 @@ export function getMousePosition() {
 export function Init(stage) {
     // listen for handle key presses
     window.addEventListener('keydown', event => {
-        keyLookup[event.key] = true;
+        keyLookup[event.key.toUpperCase()] = true;
     }, false);
 
     // listen for key releases
     window.addEventListener('keyup', event => {
-        keyLookup[event.key] = false;
+        keyLookup[event.key.toUpperCase()] = false;
     }, false);
 
     // listen for mouse click

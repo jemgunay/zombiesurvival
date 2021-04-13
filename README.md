@@ -28,9 +28,7 @@ npm run lint
 * Apply impulse to zombie on impact
 * Player sprites for different weapons
 * Spawn bullets on tip of gun
-* Q/E to cycle weapons
 
 ### Bugs
 
-* Support caps lock + WASD, currently sticks
 * Fix zombie rotation issue (travel clockwise around zombie and they ping to face anticlockwise)
