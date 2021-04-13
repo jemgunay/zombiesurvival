@@ -1,5 +1,19 @@
 <template>
-    <div id="container"></div>
+    <div id="container">
+        <div id="game"></div>
+        <div id="controls">
+            <div class="control-pane">
+                <p>Move - WASD</p>
+                <p>Reload - R</p>
+                <p><a href="https://github.com/jemgunay/zombiesurvival" target="_blank">GitHub</a></p>
+            </div>
+            <div class="control-pane" id="control-pane-right">
+                <p>1 - Pistol</p>
+                <p>2 - Rifle</p>
+                <p>3 - Shotgun</p>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -8,17 +22,45 @@
     export default {
         name: 'Game',
         mounted() {
-            let container = document.getElementById('container');
-            Game.init(container);
+            this.container = document.getElementById('game');
+            Game.init(this.container);
         }
     }
 </script>
 
 <style scoped>
-    #container {
+    #game {
         width: 720px;
         height: 480px;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #controls {
+        text-align: center;
+    }
+
+    .control-pane {
+        display: inline-block;
+        width: 200px;
+        text-align: right;
+        vertical-align: baseline;
+    }
+
+    .control-pane:nth-child(2) {
+        text-align: left;
+    }
+
+    .control-pane p {
+        color: #FFFFFF;
+        margin: 10px 15px;
+    }
+
+    .control-pane a:hover, .control-pane a:visited {
+        color: #FFFFFF;
+    }
+
+    .control-pane a:hover {
+        color: #838383;
     }
 </style>

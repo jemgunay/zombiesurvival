@@ -29,8 +29,6 @@ export let Game = {
 
             // start world
             this.world = new World(this.app);
-            //this.world.scale.set(0.9);
-            //this.world.scale.set(0.2);
             this.app.stage.addChild(this.world);
         });
     }
