@@ -6,6 +6,7 @@ import LevelManager from "./LevelManager";
 import * as ResourceManager from "./ResourceManager";
 import Zombie from "./Zombie";
 import * as Decal from "./Decal";
+import * as Projectile from "./Projectile";
 import {Game} from "./Game";
 
 export default class World extends PIXI.Container {
@@ -15,22 +16,40 @@ export default class World extends PIXI.Container {
         this.app = app;
         this.sortableChildren = true;
         this.zombies = [];
-        this.projectiles = [];
+        this.projectileManager = new Projectile.Manager(this);
+
+        // tiled grass
         let groundSprite = new PIXI.TilingSprite(
-            ResourceManager.GetTexture('grass'),
-            app.screen.width*2,
-            app.screen.height*2,
+            ResourceManager.GetTexture("grass"),
+            app.screen.width * 4,
+            app.screen.height * 4,
         );
         groundSprite.anchor.set(0.25);
-        //groundSprite.tileScale.set(0.25);
+        groundSprite.position.set(-app.screen.width/2, -app.screen.height/2);
         this.addChild(groundSprite);
-        // TODO: use ParticleContainers for decals
+        // farm border bottom
+        let worldMapSpriteBottom = ResourceManager.GetSprite("farm_border_bottom");
+        worldMapSpriteBottom.anchor.set(0.25);
+        worldMapSpriteBottom.position.set(-app.screen.width/2, -app.screen.height/2);
+        this.addChild(worldMapSpriteBottom);
+        // blood decals
+        // TODO: use ParticleContainers for decals (one container per texture required)
         this.decalContainer = new PIXI.Container();
         this.addChild(this.decalContainer);
 
         // create player
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
         this.addChild(this.player);
+
+        // zombie layer
+        this.zombieContainer = new PIXI.Container();
+        this.addChild(this.zombieContainer);
+
+        // farm border
+        let worldMapSpriteTop = ResourceManager.GetSprite("farm_border_top");
+        worldMapSpriteTop.anchor.set(0.25);
+        worldMapSpriteTop.position.set(-app.screen.width/2, -app.screen.height/2);
+        this.addChild(worldMapSpriteTop);
 
         // create levels
         this.levelManager = new LevelManager();
@@ -80,8 +99,8 @@ export default class World extends PIXI.Container {
         // make camera follow player
         let playerPos = this.player.getGlobalPosition();
         let cameraVel = {
-            x: Math.abs(playerPos.x - this.app.screen.width/2) * 0.1,
-            y: Math.abs(playerPos.y - this.app.screen.height/2) * 0.1,
+            x: Math.abs(playerPos.x - this.app.screen.width / 2) * 0.05,
+            y: Math.abs(playerPos.y - this.app.screen.height / 2) * 0.05,
         };
         if (cameraVel.x < 0.05) {
             cameraVel.x = 0;
@@ -89,14 +108,14 @@ export default class World extends PIXI.Container {
         if (cameraVel.y < 0.05) {
             cameraVel.y = 0;
         }
-        if (playerPos.x < this.app.screen.width/2) {
+        if (playerPos.x < this.app.screen.width / 2) {
             this.x += cameraVel.x;
-        } else if (playerPos.x > this.app.screen.width/2) {
+        } else if (playerPos.x > this.app.screen.width / 2) {
             this.x -= cameraVel.x;
         }
-        if (playerPos.y < this.app.screen.height/2) {
+        if (playerPos.y < this.app.screen.height / 2) {
             this.y += cameraVel.y;
-        } else if (playerPos.y > this.app.screen.height/2) {
+        } else if (playerPos.y > this.app.screen.height / 2) {
             this.y -= cameraVel.y;
         }
 
@@ -104,20 +123,19 @@ export default class World extends PIXI.Container {
         if (Input.isMouseDown() && this.player.alive) {
             let projectiles = this.player.attack();
             for (let projectile of projectiles) {
-                this.addChild(projectile);
-                this.projectiles.push(projectile);
+                this.projectileManager.push(projectile);
             }
         }
 
         // check collisions between projectiles and zombies
-        for (let i = this.projectiles.length - 1; i >= 0; i--) {
-            this.projectiles[i].step(delta);
+        for (let i = this.projectileManager.projectiles.length - 1; i >= 0; i--) {
+            let projectile = this.projectileManager.projectiles[i];
+            projectile.step(delta);
 
             for (let j = this.zombies.length - 1; j >= 0; j--) {
-                if (this.zombies[j].hitTestCircle(this.projectiles[i])) {
-                    if (this.zombies[j].applyDamage(this.projectiles[i].damage)) {
-                        // zombie died
-                        // play flesh exploding sound
+                if (this.zombies[j].hitTestCircle(projectile)) {
+                    if (this.zombies[j].applyDamage(projectile.damage)) {
+                        // zombie died - play flesh exploding sound
                         ResourceManager.PlaySound("flesh_explode_" + Util.RandomInt(1, 4));
 
                         // directional blood splat decal
@@ -125,14 +143,13 @@ export default class World extends PIXI.Container {
                         this.decalContainer.addChild(newSplat);
 
                         // remove zombie
-                        this.removeChild(this.zombies[j]);
+                        this.zombieContainer.removeChild(this.zombies[j]);
                         this.zombies.splice(j, 1);
 
                         // update kill counter
                         Game.ui.incrementKillCounter();
                     } else {
-                        // zombie took damage, but didn't die
-                        // play bullet impact sound
+                        // zombie took damage, but didn't die - play bullet impact sound
                         ResourceManager.PlaySound("flesh_impact_" + Util.RandomInt(1, 8));
 
                         // downward blood splat decal
@@ -140,10 +157,9 @@ export default class World extends PIXI.Container {
                         this.decalContainer.addChild(newSplat);
                     }
 
-                    // remove projectile
                     // TODO: apply impulse to zombie on impact
-                    this.removeChild(this.projectiles[i]);
-                    this.projectiles.splice(i, 1);
+                    // remove projectile
+                    this.projectileManager.drop(projectile);
                     break;
                 }
             }
@@ -165,7 +181,7 @@ export default class World extends PIXI.Container {
             newZombie.setTargetFunc(() => (newTarget));
         }
         this.zombies.push(newZombie);
-        this.addChild(newZombie);
+        this.zombieContainer.addChild(newZombie);
     }
 
     endGame() {

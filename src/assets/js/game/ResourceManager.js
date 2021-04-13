@@ -1,8 +1,6 @@
 import * as PIXI from "pixi.js";
 import 'pixi-sound';
 
-let frameStore = {};
-
 // loads all sprite sheets into memory, then process frames out of them for consumption during sprite creation.
 export function Load(completedCallback) {
     PIXI.Loader.shared
@@ -23,6 +21,8 @@ export function Load(completedCallback) {
         .add('grass', 'game/images/grass.jpg')
         .add('directional_blood_splat', 'game/images/directional_blood_splat.png')
         .add('downward_blood_splat', 'game/images/downward_blood_splat.png')
+        .add('farm_border_top', 'game/images/farm_border_top.png')
+        .add('farm_border_bottom', 'game/images/farm_border_bottom.png')
         // sounds
         .add('1911_pistol_shoot_1', 'game/sounds/1911_pistol/weap_mike1911_fire_plr_01.wav')
         .add('1911_pistol_shoot_2', 'game/sounds/1911_pistol/weap_mike1911_fire_plr_02.wav')
@@ -65,6 +65,8 @@ export function Load(completedCallback) {
             completedCallback();
         });
 }
+
+let frameStore = {};
 
 // loads N frames from a given sprite sheet and stores them.
 export function LoadFramesFromTexture(prefix, endFrame) {
