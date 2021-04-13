@@ -54,9 +54,16 @@
     .control-pane p {
         color: #FFFFFF;
         margin: 10px 15px;
+        /* make text not selectable */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
-    .control-pane a:hover, .control-pane a:visited {
+    .control-pane a, .control-pane a:hover, .control-pane a:visited {
         color: #FFFFFF;
     }
 

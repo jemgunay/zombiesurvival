@@ -18,7 +18,6 @@ npm run lint
 
 ### Features
 
-* World design & boundary
 * Sounds
     * Reload
     * Zombie moans
@@ -27,12 +26,11 @@ npm run lint
 * Ammo drops
 * Zombie font
 * Apply impulse to zombie on impact
-* Player sprites for weapons
+* Player sprites for different weapons
 * Spawn bullets on tip of gun
 * Q/E to cycle weapons
 
 ### Bugs
 
 * Support caps lock + WASD, currently sticks
-* Broken fence posts in front of player
 * Fix zombie rotation issue (travel clockwise around zombie and they ping to face anticlockwise)

@@ -6,23 +6,28 @@ export default class LevelManager {
         this.levels = [
             {
                 zombieCount: 3,
-                spawnTime: {min: 2000, max: 2200}
+                spawnTime: {min: 2000, max: 2200},
+                zombieSpeed: 0.6,
             },
             {
                 zombieCount: 7,
-                spawnTime: {min: 1300, max: 2000}
+                spawnTime: {min: 1300, max: 2000},
+                zombieSpeed: 0.6,
             },
             {
                 zombieCount: 12,
-                spawnTime: {min: 900, max: 1200}
+                spawnTime: {min: 900, max: 1400},
+                zombieSpeed: 0.7,
             },
             {
-                zombieCount: 28,
-                spawnTime: {min: 800, max: 1100}
+                zombieCount: 25,
+                spawnTime: {min: 800, max: 1100},
+                zombieSpeed: 0.7,
             },
             {
                 zombieCount: 35,
-                spawnTime: {min: 400, max: 700}
+                spawnTime: {min: 750, max: 900},
+                zombieSpeed: 0.8,
             },
         ];
         this.currentLevelNum = 0;
@@ -33,7 +38,7 @@ export default class LevelManager {
             return;
         }
         this.currentLevelNum++;
-        this.currentLevel = this.levels[this.currentLevelNum-1];
+        this.currentLevel = this.levels[this.currentLevelNum - 1];
         Game.ui.setRoundText(this.currentLevelNum);
         this.tick();
     }
