@@ -175,16 +175,20 @@ export default class Player extends Entity {
 
         this.armoury.equipped.state = Weapon.ReloadingState;
 
-        // determine how much ammo is required from the armoury
-        let requiredAmmo = this.armoury.equipped.ammoCapacity - this.armoury.equipped.ammoLoaded;
-        let diff = 0;
-        if (this.armoury.ammo[this.armoury.equipped.ammoType].count >= requiredAmmo) {
-            diff = requiredAmmo;
-        } else {
-            diff = this.armoury.ammo[this.armoury.equipped.ammoType].count;
+        // default 1 ammo for ShellReload, override for ClipReload
+        let diff = 1;
+        if (this.armoury.equipped.reloadType === Weapon.ClipReload) {
+            // determine how much ammo is required from the armoury
+            const requiredAmmo = this.armoury.equipped.ammoCapacity - this.armoury.equipped.ammoLoaded;
+            if (this.armoury.ammo[this.armoury.equipped.ammoType].count >= requiredAmmo) {
+                diff = requiredAmmo;
+            } else {
+                diff = this.armoury.ammo[this.armoury.equipped.ammoType].count;
+            }
         }
 
-        // TODO: start reload sound
+        // start reload sound
+        ResourceManager.PlaySound(this.armoury.equipped.reloadSound);
 
         setTimeout(() => {
             // move ammo from armoury to weapon

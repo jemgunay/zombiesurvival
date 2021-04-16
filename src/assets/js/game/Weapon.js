@@ -3,6 +3,9 @@ import * as ResourceManager from "./ResourceManager";
 export const SemiAutoTrigger = "semi";
 export const AutoTrigger = "auto";
 
+export const ClipReload = "clip";
+export const ShellReload = "shell";
+
 export const IdleState = "idle";
 export const ShootingState = "shooting";
 export const EmptyBarrelState = "empty_barrel";
@@ -67,18 +70,18 @@ export class Armoury {
 
     equipPrevious() {
         if (this.equippedIndex === 0) {
-            this.equip(this.weapons.length-1);
+            this.equip(this.weapons.length - 1);
             return;
         }
-        this.equip(this.equippedIndex-1);
+        this.equip(this.equippedIndex - 1);
     }
 
     equipNext() {
-        if (this.equippedIndex === this.weapons.length-1) {
+        if (this.equippedIndex === this.weapons.length - 1) {
             this.equip(0);
             return;
         }
-        this.equip(this.equippedIndex+1);
+        this.equip(this.equippedIndex + 1);
     }
 }
 
@@ -88,6 +91,7 @@ export class Weapon {
         this.trigger = "";
         this.shootDuration = 0;
         this.reloadDuration = 0;
+        this.reloadType = "";
         this.ammoCapacity = 0;
         this.ammoLoaded = 0;
         this.projectilesPerShot = 0;
@@ -111,10 +115,11 @@ export class Weapon {
 export class Pistol extends Weapon {
     constructor() {
         super({
-            name: "1911_pistol",
+            name: "1911 Pistol",
             trigger: SemiAutoTrigger,
             shootDuration: 190,
-            reloadDuration: 2000,
+            reloadDuration: 1700,
+            reloadType: ClipReload,
             ammoCapacity: 10,
             projectilesPerShot: 1,
             spread: 1,
@@ -125,7 +130,7 @@ export class Pistol extends Weapon {
                 "1911_pistol_shoot_1",
                 "1911_pistol_shoot_2",
             ],
-            reloadSound: "",
+            reloadSound: "1911_pistol_reload",
             emptySound: "pistol_empty",
         });
     }
@@ -134,10 +139,11 @@ export class Pistol extends Weapon {
 export class AssaultRifle extends Weapon {
     constructor() {
         super({
-            name: "carbine_rifle",
+            name: "G3 Rifle",
             trigger: AutoTrigger,
             shootDuration: 150,
             reloadDuration: 2000,
+            reloadType: ClipReload,
             ammoCapacity: 30,
             projectilesPerShot: 1,
             spread: 3,
@@ -145,10 +151,10 @@ export class AssaultRifle extends Weapon {
             idleFrame: 0,
             shootFrame: 1,
             attackSounds: [
-                "carbine_rifle_shoot_1",
-                "carbine_rifle_shoot_2",
+                "g3_rifle_shoot_1",
+                "g3_rifle_shoot_2",
             ],
-            reloadSound: "",
+            reloadSound: "g3_rifle_reload",
             emptySound: "rifle_empty",
         });
     }
@@ -157,10 +163,11 @@ export class AssaultRifle extends Weapon {
 export class Shotgun extends Weapon {
     constructor() {
         super({
-            name: "model_680_shotgun",
+            name: "SPAS-12 Shotgun",
             trigger: SemiAutoTrigger,
             shootDuration: 800,
-            reloadDuration: 2000,
+            reloadDuration: 600,
+            reloadType: ShellReload,
             ammoCapacity: 8,
             projectilesPerShot: 10,
             spread: 18,
@@ -168,10 +175,10 @@ export class Shotgun extends Weapon {
             idleFrame: 0,
             shootFrame: 1,
             attackSounds: [
-                "romeo_shotgun_shoot_1",
-                "romeo_shotgun_shoot_2",
+                "spas_12_shotgun_shoot_1",
+                "spas_12_shotgun_shoot_2",
             ],
-            reloadSound: "",
+            reloadSound: "spas_12_shotgun_insert_shell",
             emptySound: "rifle_empty",
         });
     }
