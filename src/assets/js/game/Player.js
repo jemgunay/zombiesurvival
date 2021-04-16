@@ -102,7 +102,7 @@ export default class Player extends Entity {
         if (this.armoury.equipped.ammoLoaded === 0) {
             // play empty clip sound
             this.armoury.equipped.state = Weapon.EmptyClipState;
-            if (this.armoury.equipped.emptySound !== '') {
+            if (this.armoury.equipped.emptySound !== "") {
                 ResourceManager.PlaySound(this.armoury.equipped.emptySound);
             }
             setTimeout(() => {

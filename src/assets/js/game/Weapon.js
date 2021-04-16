@@ -20,17 +20,17 @@ export class Armoury {
             count: 20,
             projectileSpeed: 16,
             projectileDamage: 40,
-        }
+        };
         this.ammo[RifleAmmo] = {
             count: 60,
             projectileSpeed: 18,
             projectileDamage: 26,
-        }
+        };
         this.ammo[ShotgunAmmo] = {
             count: 20,
             projectileSpeed: 16,
             projectileDamage: 22,
-        }
+        };
         this.weapons = [];
         this.equipped = null;
         this.equippedIndex = null;

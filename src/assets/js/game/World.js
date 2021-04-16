@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import Player from "./Player.js"
-import * as Util from "./Util.js"
+import Player from "./Player.js";
+import * as Util from "./Util.js";
 import * as Input from "./Input";
 import LevelManager from "./LevelManager";
 import * as ResourceManager from "./ResourceManager";
@@ -202,6 +202,6 @@ export default class World extends PIXI.Container {
         return {
             x: this.player.position.x + Math.cos(randRadius) * 1000,
             y: this.player.position.y + Math.sin(randRadius) * 1000,
-        }
+        };
     }
 }

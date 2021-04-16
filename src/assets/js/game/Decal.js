@@ -2,7 +2,7 @@ import * as ResourceManager from "./ResourceManager";
 import * as Util from "./Util";
 
 export function NewDirectionalBlood(x, y, rotation) {
-    let sprite = ResourceManager.GetSprite('directional_blood_splat');
+    let sprite = ResourceManager.GetSprite("directional_blood_splat");
     sprite.anchor.set(0.5, 0.6);
     sprite.position.set(x, y);
     sprite.rotation = rotation - Math.PI / 2;
@@ -16,7 +16,7 @@ export function NewDirectionalBlood(x, y, rotation) {
 }
 
 export function NewDownwardBlood(x, y) {
-    let sprite = ResourceManager.GetSprite('downward_blood_splat');
+    let sprite = ResourceManager.GetSprite("downward_blood_splat");
     sprite.anchor.set(0.5);
     sprite.position.set(x, y);
     sprite.rotation = Util.DegToRad(Util.RandomInt(0, 360));

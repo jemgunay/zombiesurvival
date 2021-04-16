@@ -19,15 +19,15 @@
 </template>
 
 <script>
-    import {Game} from '@/assets/js/game/Game.js'
+import {Game} from "@/assets/js/game/Game.js";
 
-    export default {
-        name: 'Game',
-        mounted() {
-            this.container = document.getElementById('game');
-            Game.init(this.container);
-        }
+export default {
+    name: "Game",
+    mounted() {
+        this.container = document.getElementById("game");
+        Game.init(this.container);
     }
+};
 </script>
 
 <style scoped>

@@ -19,5 +19,20 @@
   "plugins": [
     "vue"
   ],
-  "rules": {}
+  "rules": {
+    "indent": ["error", 4],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["warn", "double"],
+    "semi": ["error", "always"],
+    "no-console": ["error", {
+      "allow": ["warn", "error"]
+    }],
+    "no-irregular-whitespace": [
+      "error", {
+        "skipTemplates": true,
+        "skipRegExps": true,
+        "skipComments": true
+      }
+    ]
+  }
 }

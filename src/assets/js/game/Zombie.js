@@ -51,7 +51,7 @@ export default class Zombie extends Entity {
         this.speed = 0;
         this.rotSpeed = 0.05;
         this.acceleration = 0.02;
-        this.maxSpeed = maxSpeed
+        this.maxSpeed = maxSpeed;
         this.setNormalSpeed();
         this.health = 100;
     }

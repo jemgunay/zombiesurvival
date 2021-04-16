@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import Game from './components/Game.vue'
+import Game from "./components/Game.vue";
 
 export default {
-  name: 'App',
-  components: {
-    Game
-  }
-}
+    name: "App",
+    components: {
+        Game
+    }
+};
 </script>
 
 <style>
