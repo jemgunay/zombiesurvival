@@ -1,5 +1,7 @@
 # Zombie Survival
 
+[![CircleCI](https://circleci.com/gh/jemgunay/zombiesurvival/tree/master.svg?style=svg)](https://circleci.com/gh/jemgunay/zombiesurvival/tree/master)
+
 Survive as many waves of zombies as you can... [Play here!](https://jemgunay.co.uk/zombiesurvival)
 
 ## Usage
