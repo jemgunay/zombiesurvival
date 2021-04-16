@@ -12,14 +12,14 @@ const numericLookup = {
     8: "th",
     9: "th",
     10: "th",
-}
+};
 
 export default class UI extends PIXI.Container {
     constructor() {
         super();
 
         let textStyle = new PIXI.TextStyle({
-            fontFamily: 'Arial',
+            fontFamily: "Arial",
             fontSize: 26,
             fill: 0xFFFFFF,
         });
@@ -50,7 +50,7 @@ export default class UI extends PIXI.Container {
     }
 
     incrementKillCounter() {
-        this.killCount++
+        this.killCount++;
         this.killCountText.text = this.killCount + " Kills";
         this.killCountText.x = Game.app.screen.width - this.killCountText.width - 20;
         this.killCountText.y = 20;

@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import World from "./World.js"
-import * as Input from "./Input.js"
-import * as ResourceManager from "./ResourceManager.js"
+import World from "./World.js";
+import * as Input from "./Input.js";
+import * as ResourceManager from "./ResourceManager.js";
 import UI from "./UI";
 
 export let Game = {
@@ -32,4 +32,4 @@ export let Game = {
             this.app.stage.addChild(this.world);
         });
     }
-}
+};

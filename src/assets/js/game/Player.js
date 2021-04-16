@@ -78,6 +78,10 @@ export default class Player extends Entity {
             this.armoury.equip(3);
         } else if (Input.isKeyPressed(Input.Key5)) {
             this.armoury.equip(4);
+        } else if (Input.isKeyPressed(Input.KeyQ)) {
+            this.armoury.equipPrevious();
+        } else if (Input.isKeyPressed(Input.KeyE)) {
+            this.armoury.equipNext();
         }
 
         // reload weapon
@@ -98,7 +102,7 @@ export default class Player extends Entity {
         if (this.armoury.equipped.ammoLoaded === 0) {
             // play empty clip sound
             this.armoury.equipped.state = Weapon.EmptyClipState;
-            if (this.armoury.equipped.emptySound !== '') {
+            if (this.armoury.equipped.emptySound !== "") {
                 ResourceManager.PlaySound(this.armoury.equipped.emptySound);
             }
             setTimeout(() => {

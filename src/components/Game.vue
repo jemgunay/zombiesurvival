@@ -8,6 +8,8 @@
                 <p><a href="https://github.com/jemgunay/zombiesurvival" target="_blank">GitHub</a></p>
             </div>
             <div class="control-pane" id="control-pane-right">
+                <p>Q - Previous Weapon</p>
+                <p>E - Next Weapon</p>
                 <p>1 - Pistol</p>
                 <p>2 - Rifle</p>
                 <p>3 - Shotgun</p>
@@ -17,15 +19,15 @@
 </template>
 
 <script>
-    import {Game} from '@/assets/js/game/Game.js'
+import {Game} from "@/assets/js/game/Game.js";
 
-    export default {
-        name: 'Game',
-        mounted() {
-            this.container = document.getElementById('game');
-            Game.init(this.container);
-        }
+export default {
+    name: "Game",
+    mounted() {
+        this.container = document.getElementById("game");
+        Game.init(this.container);
     }
+};
 </script>
 
 <style scoped>
@@ -44,7 +46,7 @@
         display: inline-block;
         width: 200px;
         text-align: right;
-        vertical-align: baseline;
+        vertical-align: top;
     }
 
     .control-pane:nth-child(2) {
@@ -54,9 +56,16 @@
     .control-pane p {
         color: #FFFFFF;
         margin: 10px 15px;
+        /* prevent text from being highlighted */
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
-    .control-pane a:hover, .control-pane a:visited {
+    .control-pane a, .control-pane a:hover, .control-pane a:visited {
         color: #FFFFFF;
     }
 

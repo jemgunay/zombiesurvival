@@ -20,17 +20,17 @@ export class Armoury {
             count: 20,
             projectileSpeed: 16,
             projectileDamage: 40,
-        }
+        };
         this.ammo[RifleAmmo] = {
             count: 60,
             projectileSpeed: 18,
             projectileDamage: 26,
-        }
+        };
         this.ammo[ShotgunAmmo] = {
             count: 20,
             projectileSpeed: 16,
             projectileDamage: 22,
-        }
+        };
         this.weapons = [];
         this.equipped = null;
         this.equippedIndex = null;
@@ -63,6 +63,22 @@ export class Armoury {
         setTimeout(() => {
             this.switching = false;
         }, 500);
+    }
+
+    equipPrevious() {
+        if (this.equippedIndex === 0) {
+            this.equip(this.weapons.length-1);
+            return;
+        }
+        this.equip(this.equippedIndex-1);
+    }
+
+    equipNext() {
+        if (this.equippedIndex === this.weapons.length-1) {
+            this.equip(0);
+            return;
+        }
+        this.equip(this.equippedIndex+1);
     }
 }
 

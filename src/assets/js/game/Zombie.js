@@ -7,7 +7,7 @@ const torsoColours = ["blue", "green", "orange", "purple", "grey", "red"];
 const hairColours = ["brunette", "blonde", "ginger"];
 
 export default class Zombie extends Entity {
-    constructor(x, y, rotation) {
+    constructor(x, y, rotation, maxSpeed) {
         super(20);
 
         // legs
@@ -51,16 +51,26 @@ export default class Zombie extends Entity {
         this.speed = 0;
         this.rotSpeed = 0.05;
         this.acceleration = 0.02;
-        this.setTargetSpeed(0.6);
+        this.maxSpeed = maxSpeed;
+        this.setNormalSpeed();
         this.health = 100;
     }
 
-    setTargetSpeed(speed) {
-        this.targetSpeed = speed;
+    setNormalSpeed() {
+        this.targetSpeed = this.maxSpeed;
         // make leg animation faster than other sprites
-        this.children[0].animationSpeed = speed * 0.6;
+        this.children[0].animationSpeed = this.targetSpeed * 0.6;
         for (let i = 1; i < this.children.length; i++) {
-            this.children[i].animationSpeed = speed * 0.4;
+            this.children[i].animationSpeed = this.targetSpeed * 0.4;
+        }
+    }
+
+    setSlowSpeed() {
+        this.targetSpeed = this.maxSpeed/3;
+        // make leg animation faster than other sprites
+        this.children[0].animationSpeed = this.targetSpeed * 0.6;
+        for (let i = 1; i < this.children.length; i++) {
+            this.children[i].animationSpeed = this.targetSpeed * 0.4;
         }
     }
 

@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import Player from "./Player.js"
-import * as Util from "./Util.js"
+import Player from "./Player.js";
+import * as Util from "./Util.js";
 import * as Input from "./Input";
 import LevelManager from "./LevelManager";
 import * as ResourceManager from "./ResourceManager";
@@ -80,10 +80,10 @@ export default class World extends PIXI.Container {
             this.zombies[i].step(delta);
 
             // determine if zombie is touching the zombie next closest to the player
-            this.zombies[i].setTargetSpeed(0.6);
+            this.zombies[i].setNormalSpeed();
             if (i > 0) {
                 if (this.zombies[i].hitTestCircle(this.zombies[i - 1])) {
-                    this.zombies[i].setTargetSpeed(0.2);
+                    this.zombies[i].setSlowSpeed();
                 }
             }
 
@@ -173,7 +173,8 @@ export default class World extends PIXI.Container {
             x: this.player.position.x + (Math.cos(randRadius) * 450),
             y: this.player.position.y + (Math.sin(randRadius) * 450),
         };
-        let newZombie = new Zombie(spawnPos.x, spawnPos.y, this.player.angleBetween(spawnPos) + Math.PI);
+        const spawnAngle = this.player.angleBetween(spawnPos) + Math.PI;
+        let newZombie = new Zombie(spawnPos.x, spawnPos.y, spawnAngle, this.levelManager.currentLevel.zombieSpeed);
         if (this.player.alive) {
             newZombie.setTargetFunc(() => (this.player.position));
         } else {
@@ -201,6 +202,6 @@ export default class World extends PIXI.Container {
         return {
             x: this.player.position.x + Math.cos(randRadius) * 1000,
             y: this.player.position.y + Math.sin(randRadius) * 1000,
-        }
+        };
     }
 }
