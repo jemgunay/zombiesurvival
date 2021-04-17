@@ -23,7 +23,7 @@ export class Manager {
         clearTimeout(projectile.timeout);
         this.container.removeChild(projectile);
         this.projectiles = this.projectiles.filter(function (el) {
-            return el.id != projectile.id;
+            return el.id !== projectile.id;
         });
     }
 }

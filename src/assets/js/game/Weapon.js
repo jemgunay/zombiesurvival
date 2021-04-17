@@ -96,6 +96,8 @@ export class Weapon {
         this.ammoLoaded = 0;
         this.projectilesPerShot = 0;
         this.spread = 0;
+        this.offsetDist = 0;
+        this.offsetAngle = 0;
         this.ammoType = null;
         this.idleFrame = 0;
         this.shootFrame = 0;
@@ -123,6 +125,8 @@ export class Pistol extends Weapon {
             ammoCapacity: 10,
             projectilesPerShot: 1,
             spread: 1,
+            offsetDist: 25,
+            offsetAngle: 10,
             ammoType: PistolAmmo,
             idleFrame: 0,
             shootFrame: 1,
@@ -147,9 +151,11 @@ export class AssaultRifle extends Weapon {
             ammoCapacity: 30,
             projectilesPerShot: 1,
             spread: 3,
+            offsetDist: 45,
+            offsetAngle: 20,
             ammoType: RifleAmmo,
-            idleFrame: 0,
-            shootFrame: 1,
+            idleFrame: 2,
+            shootFrame: 3,
             attackSounds: [
                 "g3_rifle_shoot_1",
                 "g3_rifle_shoot_2",
@@ -171,6 +177,8 @@ export class Shotgun extends Weapon {
             ammoCapacity: 8,
             projectilesPerShot: 10,
             spread: 18,
+            offsetDist: 45,
+            offsetAngle: 0,
             ammoType: ShotgunAmmo,
             idleFrame: 0,
             shootFrame: 1,

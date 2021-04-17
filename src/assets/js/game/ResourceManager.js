@@ -56,7 +56,7 @@ export function Load(completedCallback) {
         .add("walk_grass_3", "game/sounds/walk_grass/step_sprint_grass_short_r_03.wav")
         .load(function () {
             // generate frames from sprite sheets
-            LoadFramesFromTexture("player", 3);
+            LoadFramesFromTexture("player", 5);
             LoadFramesFromTexture("normal_zombie_head_brunette", 19);
             LoadFramesFromTexture("normal_zombie_head_blonde", 19);
             LoadFramesFromTexture("normal_zombie_head_ginger", 19);
