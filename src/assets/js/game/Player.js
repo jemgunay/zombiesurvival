@@ -217,6 +217,6 @@ export default class Player extends Entity {
         // play flesh exploding sound
         ResourceManager.PlaySound("flesh_explode_" + Util.RandomInt(1, 4));
         this.alive = false;
-        this.sprite.gotoAndStop(4);
+        this.sprite.gotoAndStop(0);
     }
 }

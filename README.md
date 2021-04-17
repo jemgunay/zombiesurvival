@@ -21,15 +21,14 @@ npm run lint
 ### Features
 
 * Sounds
-    * Reload
     * Zombie moans
     * Ambient sounds
 * Fat zombies
 * Ammo drops
 * Zombie font
 * Apply impulse to zombie on impact
-* Player sprites for different weapons
-* Spawn bullets on tip of gun
+* Player sprites for different weapons (2/3, shotgun remaining)
+* Grenade/rocket launcher
 
 ### Bugs
 
