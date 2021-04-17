@@ -152,11 +152,11 @@ export default class Player extends Entity {
                 rotationOffset *= -1;
             }
             // offset projectile from barrel of gun
-            const rot = this.rotation + Util.DegToRad(this.armoury.equipped.offsetAngle)
+            const rot = this.rotation + Util.DegToRad(this.armoury.equipped.offsetAngle);
             const projectilePos = {
                 x: this.position.x + (Math.cos(rot) * this.armoury.equipped.offsetDist),
                 y: this.position.y + (Math.sin(rot) * this.armoury.equipped.offsetDist),
-            }
+            };
             // create projectile
             let newProjectile = new Projectile.Projectile(
                 projectilePos.x,
