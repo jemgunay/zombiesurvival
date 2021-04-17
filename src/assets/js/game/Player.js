@@ -64,7 +64,6 @@ export default class Player extends Entity {
         }
 
         this.position.set(this.position.x + xv * delta * this.speed, this.position.y + yv * delta * this.speed);
-
         let mousePos = Input.getMousePosition();
         this.rotation = this.angleBetweenGlobal(mousePos);
 
@@ -84,6 +83,11 @@ export default class Player extends Entity {
             this.armoury.equipNext();
         }
 
+        // set idle frame to cover when weapon switch is complete
+        if (this.armoury.equipped.state === Weapon.IdleState) {
+            this.sprite.gotoAndStop(this.armoury.equipped.idleFrame);
+        }
+
         // reload weapon
         if (Input.isKeyPressed(Input.KeyR)) {
             this.reload();
@@ -95,7 +99,7 @@ export default class Player extends Entity {
     }
 
     attack() {
-        if (this.armoury.equipped.state !== Weapon.IdleState) {
+        if (this.armoury.equipped.state !== Weapon.IdleState || this.armoury.switching === true) {
             return [];
         }
         // no ammo left in clip
@@ -128,7 +132,7 @@ export default class Player extends Entity {
             if (this.alive) {
                 this.sprite.gotoAndStop(this.armoury.equipped.idleFrame);
             }
-        }, 200);
+        }, 100);
 
         // end of attack - reset state
         setTimeout(() => {
@@ -142,13 +146,21 @@ export default class Player extends Entity {
         // create projectile
         let projectiles = [];
         for (let i = 0; i < this.armoury.equipped.projectilesPerShot; i++) {
+            // apply random spread to simulate recoil
             let rotationOffset = Util.RandomInt(0, this.armoury.equipped.spread);
             if (Util.RandomBool()) {
                 rotationOffset *= -1;
             }
+            // offset projectile from barrel of gun
+            const rot = this.rotation + Util.DegToRad(this.armoury.equipped.offsetAngle);
+            const projectilePos = {
+                x: this.position.x + (Math.cos(rot) * this.armoury.equipped.offsetDist),
+                y: this.position.y + (Math.sin(rot) * this.armoury.equipped.offsetDist),
+            };
+            // create projectile
             let newProjectile = new Projectile.Projectile(
-                this.position.x,
-                this.position.y,
+                projectilePos.x,
+                projectilePos.y,
                 this.rotation + Util.DegToRad(rotationOffset),
                 this.armoury.ammo[this.armoury.equipped.ammoType].projectileDamage,
                 this.armoury.ammo[this.armoury.equipped.ammoType].projectileSpeed,
@@ -175,16 +187,20 @@ export default class Player extends Entity {
 
         this.armoury.equipped.state = Weapon.ReloadingState;
 
-        // determine how much ammo is required from the armoury
-        let requiredAmmo = this.armoury.equipped.ammoCapacity - this.armoury.equipped.ammoLoaded;
-        let diff = 0;
-        if (this.armoury.ammo[this.armoury.equipped.ammoType].count >= requiredAmmo) {
-            diff = requiredAmmo;
-        } else {
-            diff = this.armoury.ammo[this.armoury.equipped.ammoType].count;
+        // default 1 ammo for ShellReload, override for ClipReload
+        let diff = 1;
+        if (this.armoury.equipped.reloadType === Weapon.ClipReload) {
+            // determine how much ammo is required from the armoury
+            const requiredAmmo = this.armoury.equipped.ammoCapacity - this.armoury.equipped.ammoLoaded;
+            if (this.armoury.ammo[this.armoury.equipped.ammoType].count >= requiredAmmo) {
+                diff = requiredAmmo;
+            } else {
+                diff = this.armoury.ammo[this.armoury.equipped.ammoType].count;
+            }
         }
 
-        // TODO: start reload sound
+        // start reload sound
+        ResourceManager.PlaySound(this.armoury.equipped.reloadSound);
 
         setTimeout(() => {
             // move ammo from armoury to weapon
@@ -201,6 +217,6 @@ export default class Player extends Entity {
         // play flesh exploding sound
         ResourceManager.PlaySound("flesh_explode_" + Util.RandomInt(1, 4));
         this.alive = false;
-        this.sprite.gotoAndStop(2);
+        this.sprite.gotoAndStop(4);
     }
 }
