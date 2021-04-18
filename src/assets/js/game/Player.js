@@ -27,13 +27,14 @@ export default class Player extends Entity {
         this.armoury.addWeapon(new Weapon.Pistol());
         this.armoury.addWeapon(new Weapon.AssaultRifle());
         this.armoury.addWeapon(new Weapon.Shotgun());
-        this.armoury.addWeapon(new Weapon.TurboRifle());
+        //this.armoury.addWeapon(new Weapon.TurboRifle());
 
         this.addChild(sprite);
     }
 
     step(delta) {
-        Game.ui.setAmmoText(this.armoury.equipped.ammoLoaded, this.armoury.ammo[this.armoury.equipped.ammoType].count);
+        // TODO: only update on change, not every frame
+        Game.ui.setAmmoText(this.armoury.equipped.name, this.armoury.equipped.ammoLoaded, this.armoury.ammo[this.armoury.equipped.ammoType].count);
 
         if (this.alive === false) {
             return;

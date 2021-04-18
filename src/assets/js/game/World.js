@@ -131,6 +131,7 @@ export default class World extends PIXI.Container {
             if (this.player.alive && this.player.hitTestCircle(ammoDrop)) {
                 // top up armoury ammo counts
                 this.player.armoury.ammo[ammoDrop.ammoType.name].count += 10;
+                ResourceManager.PlaySound("ammo_pickup");
 
                 // remove ammo drop
                 this.ammoDropContainer.removeChild(ammoDrop);

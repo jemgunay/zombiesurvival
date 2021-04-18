@@ -19,9 +19,11 @@ export default class UI extends PIXI.Container {
         super();
 
         let textStyle = new PIXI.TextStyle({
-            fontFamily: "Arial",
+            fontFamily: "Conv_ds-zombie-cyr",
             fontSize: 26,
             fill: 0xFFFFFF,
+            stroke: "#000000",
+            strokeThickness: 5,
         });
 
         // create level text
@@ -31,15 +33,18 @@ export default class UI extends PIXI.Container {
         this.setRoundText(1);
         this.addChild(this.roundText);
 
+        // create weapon text
+        this.weaponText = new PIXI.Text("", textStyle);
+        this.addChild(this.weaponText);
         // create ammo text
         this.ammoText = new PIXI.Text("", textStyle);
         this.addChild(this.ammoText);
 
-        // create ammo text
+        // create kill counter text
         this.killCountText = new PIXI.Text("", textStyle);
         this.killCount = -1;
-        this.incrementKillCounter();
         this.addChild(this.killCountText);
+        this.incrementKillCounter();
 
         // move to front
         this.zIndex = 10;
@@ -56,7 +61,11 @@ export default class UI extends PIXI.Container {
         this.killCountText.y = 20;
     }
 
-    setAmmoText(loaded, unloaded) {
+    setAmmoText(weaponName, loaded, unloaded) {
+        this.weaponText.text = weaponName;
+        this.weaponText.x = Game.app.screen.width - this.weaponText.width - 20;
+        this.weaponText.y = Game.app.screen.height - this.weaponText.height - 60;
+
         this.ammoText.text = loaded + " / " + unloaded;
         this.ammoText.x = Game.app.screen.width - this.ammoText.width - 20;
         this.ammoText.y = Game.app.screen.height - this.ammoText.height - 20;

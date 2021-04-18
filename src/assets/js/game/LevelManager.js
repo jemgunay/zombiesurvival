@@ -6,7 +6,7 @@ export default class LevelManager {
         this.levels = [
             {
                 zombieCount: 7,
-                spawnTime: {min: 1300, max: 2000},
+                spawnTime: {min: 1300, max: 1800},
                 zombieSpeed: 0.6,
             },
             {

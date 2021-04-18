@@ -33,7 +33,7 @@ export class Armoury {
             count: 30,
             ammoDropSize: 30,
             projectileSpeed: 18,
-            projectileDamage: 26,
+            projectileDamage: 34,
             colour: 0x00FF00,
         };
         this.ammo[ShotgunAmmo] = {
@@ -140,7 +140,7 @@ export class Weapon {
 export class Pistol extends Weapon {
     constructor() {
         super({
-            name: "1911 Pistol",
+            name: "1911",
             trigger: SemiAutoTrigger,
             shootDuration: 190,
             reloadDuration: 1700,
@@ -166,7 +166,7 @@ export class Pistol extends Weapon {
 export class AssaultRifle extends Weapon {
     constructor() {
         super({
-            name: "G3 Rifle",
+            name: "G3",
             trigger: AutoTrigger,
             shootDuration: 150,
             reloadDuration: 2000,
@@ -192,7 +192,7 @@ export class AssaultRifle extends Weapon {
 export class Shotgun extends Weapon {
     constructor() {
         super({
-            name: "SPAS-12 Shotgun",
+            name: "SPAS-12",
             trigger: SemiAutoTrigger,
             shootDuration: 800,
             reloadDuration: 600,
