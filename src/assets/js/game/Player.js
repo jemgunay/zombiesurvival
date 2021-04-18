@@ -27,6 +27,7 @@ export default class Player extends Entity {
         this.armoury.addWeapon(new Weapon.Pistol());
         this.armoury.addWeapon(new Weapon.AssaultRifle());
         this.armoury.addWeapon(new Weapon.Shotgun());
+        this.armoury.addWeapon(new Weapon.TurboRifle());
 
         this.addChild(sprite);
     }

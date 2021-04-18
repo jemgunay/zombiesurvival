@@ -29,6 +29,8 @@ npm run lint
 * Apply impulse to zombie on impact
 * Player sprites for different weapons (2/3, shotgun remaining)
 * Grenade/rocket launcher
+* Zombie gibs
+* Loading text
 
 ### Bugs
 

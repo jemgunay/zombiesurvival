@@ -8,6 +8,7 @@ import Zombie from "./Zombie";
 import * as Decal from "./Decal";
 import * as Projectile from "./Projectile";
 import {Game} from "./Game";
+import {AmmoDrop} from "./Weapon";
 
 export default class World extends PIXI.Container {
     constructor(app) {
@@ -36,6 +37,10 @@ export default class World extends PIXI.Container {
         // TODO: use ParticleContainers for decals (one container per texture required)
         this.decalContainer = new PIXI.Container();
         this.addChild(this.decalContainer);
+
+        // ammo drops
+        this.ammoDropContainer = new PIXI.Container();
+        this.addChild(this.ammoDropContainer);
 
         // create player
         this.player = new Player(app.screen.width / 2, app.screen.height / 2);
@@ -119,6 +124,19 @@ export default class World extends PIXI.Container {
             this.y -= cameraVel.y;
         }
 
+        // player collect ammo drops
+        for (let i = 0; i < this.ammoDropContainer.children.length; i++) {
+            let ammoDrop = this.ammoDropContainer.children[i];
+
+            if (this.player.alive && this.player.hitTestCircle(ammoDrop)) {
+                // top up armoury ammo counts
+                this.player.armoury.ammo[ammoDrop.ammoType.name].count += 10;
+
+                // remove ammo drop
+                this.ammoDropContainer.removeChild(ammoDrop);
+            }
+        }
+
         // player attack
         if (Input.isMouseDown() && this.player.alive) {
             let projectiles = this.player.attack();
@@ -134,16 +152,27 @@ export default class World extends PIXI.Container {
 
             for (let j = this.zombies.length - 1; j >= 0; j--) {
                 if (this.zombies[j].hitTestCircle(projectile)) {
-                    if (this.zombies[j].applyDamage(projectile.damage)) {
+                    let zombie = this.zombies[j];
+                    if (zombie.applyDamage(projectile.damage)) {
                         // zombie died - play flesh exploding sound
                         ResourceManager.PlaySound("flesh_explode_" + Util.RandomInt(1, 4));
 
                         // directional blood splat decal
-                        let newSplat = new Decal.NewDirectionalBlood(this.zombies[j].x, this.zombies[j].y, this.zombies[j].rotation);
+                        let newSplat = new Decal.NewDirectionalBlood(zombie.x, zombie.y, zombie.rotation);
                         this.decalContainer.addChild(newSplat);
 
+                        // sometimes drop ammo
+                        if (Util.RandomInt(1, 5) === 1) {
+                            // random ammo type
+                            const ammoTypes = Object.keys(this.player.armoury.ammo);
+                            const randAmmoKey = ammoTypes[Util.RandomInt(0, ammoTypes.length-1)];
+                            const randAmmoType = this.player.armoury.ammo[randAmmoKey];
+                            let ammoDrop = new AmmoDrop(zombie.x, zombie.y, randAmmoType);
+                            this.ammoDropContainer.addChild(ammoDrop);
+                        }
+
                         // remove zombie
-                        this.zombieContainer.removeChild(this.zombies[j]);
+                        this.zombieContainer.removeChild(zombie);
                         this.zombies.splice(j, 1);
 
                         // update kill counter
@@ -157,7 +186,6 @@ export default class World extends PIXI.Container {
                         this.decalContainer.addChild(newSplat);
                     }
 
-                    // TODO: apply impulse to zombie on impact
                     // remove projectile
                     this.projectileManager.drop(projectile);
                     break;

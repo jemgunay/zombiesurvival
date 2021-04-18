@@ -37,8 +37,7 @@ export class Projectile extends PIXI.Graphics {
         this.beginFill(0x191919);
         this.drawCircle(0, 0, this.radius);
         this.endFill();
-        this.x = x;
-        this.y = y;
+        this.position.set(x, y);
 
         this.vx = Math.cos(rotation) * speed;
         this.vy = Math.sin(rotation) * speed;

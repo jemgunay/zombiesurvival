@@ -5,11 +5,6 @@ export default class LevelManager {
     constructor() {
         this.levels = [
             {
-                zombieCount: 3,
-                spawnTime: {min: 2000, max: 2200},
-                zombieSpeed: 0.6,
-            },
-            {
                 zombieCount: 7,
                 spawnTime: {min: 1300, max: 2000},
                 zombieSpeed: 0.6,
@@ -28,6 +23,21 @@ export default class LevelManager {
                 zombieCount: 35,
                 spawnTime: {min: 750, max: 900},
                 zombieSpeed: 0.8,
+            },
+            {
+                zombieCount: 40,
+                spawnTime: {min: 750, max: 1200},
+                zombieSpeed: 0.9,
+            },
+            {
+                zombieCount: 50,
+                spawnTime: {min: 600, max: 700},
+                zombieSpeed: 1,
+            },
+            {
+                zombieCount: 60,
+                spawnTime: {min: 400, max: 600},
+                zombieSpeed: 1.2,
             },
         ];
         this.currentLevelNum = 0;
