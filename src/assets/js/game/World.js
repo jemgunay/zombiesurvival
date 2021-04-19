@@ -26,12 +26,12 @@ export default class World extends PIXI.Container {
             app.screen.height * 4,
         );
         groundSprite.anchor.set(0.25);
-        groundSprite.position.set(-app.screen.width/2, -app.screen.height/2);
+        groundSprite.position.set(-app.screen.width / 2, -app.screen.height / 2);
         this.addChild(groundSprite);
         // farm border bottom
         let worldMapSpriteBottom = ResourceManager.GetSprite("farm_border_bottom");
-        worldMapSpriteBottom.anchor.set(0.25);
-        worldMapSpriteBottom.position.set(-app.screen.width/2, -app.screen.height/2);
+        worldMapSpriteBottom.anchor.set(0.18, 0.25);
+        worldMapSpriteBottom.position.set(-app.screen.width / 2, -app.screen.height / 2);
         this.addChild(worldMapSpriteBottom);
         // blood decals
         // TODO: use ParticleContainers for decals (one container per texture required)
@@ -52,8 +52,8 @@ export default class World extends PIXI.Container {
 
         // farm border
         let worldMapSpriteTop = ResourceManager.GetSprite("farm_border_top");
-        worldMapSpriteTop.anchor.set(0.25);
-        worldMapSpriteTop.position.set(-app.screen.width/2, -app.screen.height/2);
+        worldMapSpriteTop.anchor.set(0.18, 0.25);
+        worldMapSpriteTop.position.set(-app.screen.width / 2, -app.screen.height / 2);
         this.addChild(worldMapSpriteTop);
 
         // create levels
@@ -130,7 +130,7 @@ export default class World extends PIXI.Container {
 
             if (this.player.alive && this.player.hitTestCircle(ammoDrop)) {
                 // top up armoury ammo counts
-                this.player.armoury.ammo[ammoDrop.ammoType.name].count += 10;
+                this.player.armoury.ammo[ammoDrop.ammoType.name].count += ammoDrop.ammoType.ammoDropSize;
                 ResourceManager.PlaySound("ammo_pickup");
 
                 // remove ammo drop
@@ -163,10 +163,10 @@ export default class World extends PIXI.Container {
                         this.decalContainer.addChild(newSplat);
 
                         // sometimes drop ammo
-                        if (Util.RandomInt(1, 5) === 1) {
+                        if (Util.RandomInt(1, 6) === 1) {
                             // random ammo type
                             const ammoTypes = Object.keys(this.player.armoury.ammo);
-                            const randAmmoKey = ammoTypes[Util.RandomInt(0, ammoTypes.length-1)];
+                            const randAmmoKey = ammoTypes[Util.RandomInt(0, ammoTypes.length - 1)];
                             const randAmmoType = this.player.armoury.ammo[randAmmoKey];
                             let ammoDrop = new AmmoDrop(zombie.x, zombie.y, randAmmoType);
                             this.ammoDropContainer.addChild(ammoDrop);

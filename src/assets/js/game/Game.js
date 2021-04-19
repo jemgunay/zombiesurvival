@@ -10,8 +10,8 @@ export let Game = {
         // ensure font loads before game start
         WebFont.load({
             custom: {
-                families: ["Conv_ds-zombie-cyr"],
-                urls: ["fonts.css"]
+                families: ["ds-zombie-cyr"],
+                urls: ["fonts/ds-zombie-cyr.css"]
             },
             active() {
                 Game.start(container);

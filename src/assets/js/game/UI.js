@@ -19,7 +19,7 @@ export default class UI extends PIXI.Container {
         super();
 
         let textStyle = new PIXI.TextStyle({
-            fontFamily: "Conv_ds-zombie-cyr",
+            fontFamily: "ds-zombie-cyr",
             fontSize: 26,
             fill: 0xFFFFFF,
             stroke: "#000000",
@@ -56,7 +56,11 @@ export default class UI extends PIXI.Container {
 
     incrementKillCounter() {
         this.killCount++;
-        this.killCountText.text = this.killCount + " Kills";
+        if (this.killCount === 1) {
+            this.killCountText.text = this.killCount + " Kill";
+        } else {
+            this.killCountText.text = this.killCount + " Kills";
+        }
         this.killCountText.x = Game.app.screen.width - this.killCountText.width - 20;
         this.killCountText.y = 20;
     }

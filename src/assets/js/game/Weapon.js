@@ -22,7 +22,7 @@ export class Armoury {
         this.ammo = {};
         this.ammo[PistolAmmo] = {
             name: PistolAmmo,
-            count: 30,
+            count: 40,
             ammoDropSize: 10,
             projectileSpeed: 16,
             projectileDamage: 40,
@@ -30,7 +30,7 @@ export class Armoury {
         };
         this.ammo[RifleAmmo] = {
             name: RifleAmmo,
-            count: 30,
+            count: 60,
             ammoDropSize: 30,
             projectileSpeed: 18,
             projectileDamage: 34,
@@ -38,7 +38,7 @@ export class Armoury {
         };
         this.ammo[ShotgunAmmo] = {
             name: ShotgunAmmo,
-            count: 8,
+            count: 4,
             ammoDropSize: 8,
             projectileSpeed: 16,
             projectileDamage: 22,
@@ -198,7 +198,7 @@ export class Shotgun extends Weapon {
             reloadDuration: 600,
             reloadType: ShellReload,
             ammoCapacity: 8,
-            projectilesPerShot: 10,
+            projectilesPerShot: 12,
             spread: 18,
             offsetDist: 45,
             offsetAngle: 0,
