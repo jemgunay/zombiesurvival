@@ -1,4 +1,5 @@
 import * as ResourceManager from "./ResourceManager";
+import * as PIXI from "pixi.js";
 
 export const SemiAutoTrigger = "semi";
 export const AutoTrigger = "auto";
@@ -20,19 +21,28 @@ export class Armoury {
     constructor() {
         this.ammo = {};
         this.ammo[PistolAmmo] = {
-            count: 20,
+            name: PistolAmmo,
+            count: 40,
+            ammoDropSize: 10,
             projectileSpeed: 16,
             projectileDamage: 40,
+            colour: 0xFF00FF,
         };
         this.ammo[RifleAmmo] = {
+            name: RifleAmmo,
             count: 60,
+            ammoDropSize: 30,
             projectileSpeed: 18,
-            projectileDamage: 26,
+            projectileDamage: 34,
+            colour: 0x00FF00,
         };
         this.ammo[ShotgunAmmo] = {
-            count: 20,
+            name: ShotgunAmmo,
+            count: 4,
+            ammoDropSize: 8,
             projectileSpeed: 16,
             projectileDamage: 22,
+            colour: 0x0000FF,
         };
         this.weapons = [];
         this.equipped = null;
@@ -85,6 +95,19 @@ export class Armoury {
     }
 }
 
+export class AmmoDrop extends PIXI.Graphics {
+    constructor(x, y, ammoType) {
+        super();
+
+        this.radius = 10;
+        this.beginFill(ammoType.colour);
+        this.drawCircle(0, 0, this.radius);
+        this.endFill();
+        this.position.set(x, y);
+        this.ammoType = ammoType;
+    }
+}
+
 export class Weapon {
     constructor(properties) {
         this.name = "";
@@ -117,7 +140,7 @@ export class Weapon {
 export class Pistol extends Weapon {
     constructor() {
         super({
-            name: "1911 Pistol",
+            name: "1911",
             trigger: SemiAutoTrigger,
             shootDuration: 190,
             reloadDuration: 1700,
@@ -143,7 +166,7 @@ export class Pistol extends Weapon {
 export class AssaultRifle extends Weapon {
     constructor() {
         super({
-            name: "G3 Rifle",
+            name: "G3",
             trigger: AutoTrigger,
             shootDuration: 150,
             reloadDuration: 2000,
@@ -169,13 +192,13 @@ export class AssaultRifle extends Weapon {
 export class Shotgun extends Weapon {
     constructor() {
         super({
-            name: "SPAS-12 Shotgun",
+            name: "SPAS-12",
             trigger: SemiAutoTrigger,
             shootDuration: 800,
             reloadDuration: 600,
             reloadType: ShellReload,
             ammoCapacity: 8,
-            projectilesPerShot: 10,
+            projectilesPerShot: 12,
             spread: 18,
             offsetDist: 45,
             offsetAngle: 0,
@@ -191,3 +214,29 @@ export class Shotgun extends Weapon {
         });
     }
 }
+
+/*export class TurboRifle extends Weapon {
+    constructor() {
+        super({
+            name: "Turbo Rifle",
+            trigger: AutoTrigger,
+            shootDuration: 50,
+            reloadDuration: 500,
+            reloadType: ClipReload,
+            ammoCapacity: 10000,
+            projectilesPerShot: 5,
+            spread: 10,
+            offsetDist: 45,
+            offsetAngle: 20,
+            ammoType: RifleAmmo,
+            idleFrame: 3,
+            shootFrame: 4,
+            attackSounds: [
+                "g3_rifle_shoot_1",
+                "g3_rifle_shoot_2",
+            ],
+            reloadSound: "g3_rifle_reload",
+            emptySound: "rifle_empty",
+        });
+    }
+}*/

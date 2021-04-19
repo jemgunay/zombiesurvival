@@ -24,11 +24,11 @@ npm run lint
     * Zombie moans
     * Ambient sounds
 * Fat zombies
-* Ammo drops
-* Zombie font
-* Apply impulse to zombie on impact
+* Ammo drop sprites
 * Player sprites for different weapons (2/3, shotgun remaining)
 * Grenade/rocket launcher
+* Zombie gibs
+* Loading text
 
 ### Bugs
 

@@ -27,12 +27,14 @@ export default class Player extends Entity {
         this.armoury.addWeapon(new Weapon.Pistol());
         this.armoury.addWeapon(new Weapon.AssaultRifle());
         this.armoury.addWeapon(new Weapon.Shotgun());
+        //this.armoury.addWeapon(new Weapon.TurboRifle());
 
         this.addChild(sprite);
     }
 
     step(delta) {
-        Game.ui.setAmmoText(this.armoury.equipped.ammoLoaded, this.armoury.ammo[this.armoury.equipped.ammoType].count);
+        // TODO: only update on change, not every frame
+        Game.ui.setAmmoText(this.armoury.equipped.name, this.armoury.equipped.ammoLoaded, this.armoury.ammo[this.armoury.equipped.ammoType].count);
 
         if (this.alive === false) {
             return;
@@ -41,17 +43,18 @@ export default class Player extends Entity {
         // move player but prevent leaving world bounds
         let xv = 0;
         let yv = 0;
-        if ((Input.isKeyPressed(Input.KeyA) || Input.isKeyPressed(Input.KeyLeft)) && this.position.x > -16) {
+        if ((Input.isKeyPressed(Input.KeyA) || Input.isKeyPressed(Input.KeyLeft)) && this.position.x > -95) {
             xv = -1;
-        } else if ((Input.isKeyPressed(Input.KeyD) || Input.isKeyPressed(Input.KeyRight)) && this.position.x < 900) {
+        } else if ((Input.isKeyPressed(Input.KeyD) || Input.isKeyPressed(Input.KeyRight)) && this.position.x < 818) {
             xv = 1;
         }
-        if ((Input.isKeyPressed(Input.KeyW) || Input.isKeyPressed(Input.KeyUp)) && this.position.y > -90) {
+        if ((Input.isKeyPressed(Input.KeyW) || Input.isKeyPressed(Input.KeyUp)) && this.position.y > -145) {
             yv = -1;
-        } else if ((Input.isKeyPressed(Input.KeyS) || Input.isKeyPressed(Input.KeyDown)) && this.position.y < 690) {
+        } else if ((Input.isKeyPressed(Input.KeyS) || Input.isKeyPressed(Input.KeyDown)) && this.position.y < 640) {
             yv = 1;
         }
 
+        // handle walking sounds
         if (xv !== 0 || yv !== 0) {
             if (!this.playingWalkingSound) {
                 this.playingWalkingSound = true;
@@ -63,10 +66,12 @@ export default class Player extends Entity {
             }
         }
 
+        // rotate player to point at mouse
         this.position.set(this.position.x + xv * delta * this.speed, this.position.y + yv * delta * this.speed);
         let mousePos = Input.getMousePosition();
         this.rotation = this.angleBetweenGlobal(mousePos);
 
+        // handle weapon switching
         if (Input.isKeyPressed(Input.Key1)) {
             this.armoury.equip(0);
         } else if (Input.isKeyPressed(Input.Key2)) {

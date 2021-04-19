@@ -37,6 +37,7 @@ export function Load(completedCallback) {
         .add("spas_12_shotgun_shoot_2", "game/sounds/spas_12_shotgun/spas_12_shotgun_shot_2.wav")
         .add("spas_12_shotgun_insert_shell", "game/sounds/spas_12_shotgun/spas_12_shotgun_insert_shell.wav")
         .add("change_weapon", "game/sounds/change_weapon.wav")
+        .add("ammo_pickup", "game/sounds/ammo_pickup.wav")
         // flesh impact
         .add("flesh_impact_1", "game/sounds/flesh_impact/blt_imp_flesh_lyr_plr_10.wav")
         .add("flesh_impact_2", "game/sounds/flesh_impact/blt_imp_flesh_plr_04.wav")

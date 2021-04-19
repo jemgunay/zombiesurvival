@@ -3,9 +3,23 @@ import World from "./World.js";
 import * as Input from "./Input.js";
 import * as ResourceManager from "./ResourceManager.js";
 import UI from "./UI";
+import * as WebFont from "webfontloader";
 
 export let Game = {
     init(container) {
+        // ensure font loads before game start
+        WebFont.load({
+            custom: {
+                families: ["ds-zombie-cyr"],
+                urls: ["fonts/ds-zombie-cyr.css"]
+            },
+            active() {
+                Game.start(container);
+            },
+        });
+    },
+
+    start(container) {
         // configure game
         this.app = new PIXI.Application({
             width: container.clientWidth,
