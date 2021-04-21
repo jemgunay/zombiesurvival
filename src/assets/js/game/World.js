@@ -35,8 +35,9 @@ export default class World extends PIXI.Container {
         this.addChild(worldMapSpriteBottom);
         // blood decals
         // TODO: use ParticleContainers for decals (one container per texture required)
-        this.decalContainer = new PIXI.Container();
-        this.addChild(this.decalContainer);
+        this.bloodContainer = new PIXI.Container();
+        this.addChild(this.bloodContainer);
+        this.gibs = [];
 
         // ammo drops
         this.ammoDropContainer = new PIXI.Container();
@@ -160,7 +161,7 @@ export default class World extends PIXI.Container {
 
                         // directional blood splat decal
                         let newSplat = new Decal.NewDirectionalBlood(zombie.x, zombie.y, zombie.rotation);
-                        this.decalContainer.addChild(newSplat);
+                        this.bloodContainer.addChild(newSplat);
 
                         // sometimes drop ammo
                         if (Util.RandomInt(1, 6) === 1) {
@@ -170,6 +171,26 @@ export default class World extends PIXI.Container {
                             const randAmmoType = this.player.armoury.ammo[randAmmoKey];
                             let ammoDrop = new AmmoDrop(zombie.x, zombie.y, randAmmoType);
                             this.ammoDropContainer.addChild(ammoDrop);
+                        }
+                        // generate gibs
+                        let gibNums = Util.Shuffle([1, 2, 3, 4, 5, 6, 7]);
+                        for (let i = 0; i < 3; i++) {
+                            let gibSprite = ResourceManager.GetSprite("normal_zombie_gib_" + gibNums[i]);
+                            gibSprite.position.set(zombie.x, zombie.y);
+                            gibSprite.scale.set(1.5);
+                            gibSprite.anchor.set(0.5);
+                            gibSprite.speed = Util.RandomInt(4, 12);
+                            gibSprite.rotDir = 1;
+                            let randOffset = Util.DegToRad(Util.RandomInt(0, 40));
+                            if (Util.RandomBool()) {
+                                randOffset *= -1;
+                                gibSprite.rotDir = -1;
+                            }
+                            let randRot = zombie.rotation + Math.PI + randOffset;
+                            gibSprite.yv = Math.sin(randRot);
+                            gibSprite.xv = Math.cos(randRot);
+                            this.gibs.push(gibSprite);
+                            this.bloodContainer.addChild(gibSprite);
                         }
 
                         // remove zombie
@@ -184,13 +205,27 @@ export default class World extends PIXI.Container {
 
                         // downward blood splat decal
                         let newSplat = new Decal.NewDownwardBlood(this.zombies[j].x, this.zombies[j].y);
-                        this.decalContainer.addChild(newSplat);
+                        this.bloodContainer.addChild(newSplat);
                     }
 
                     // remove projectile
                     this.projectileManager.drop(projectile);
                     break;
                 }
+            }
+        }
+
+        // update gibs
+        for (let gib of this.gibs) {
+            if (gib.speed === 0) {
+                continue;
+            }
+            gib.x += gib.xv * gib.speed * delta;
+            gib.y += gib.yv * gib.speed * delta;
+            gib.rotation += gib.speed / 20 * gib.rotDir;
+            gib.speed *= 0.9;
+            if (gib.speed <= 0.05) {
+                gib.speed = 0;
             }
         }
     }

@@ -27,7 +27,6 @@ npm run lint
 * Ammo drop sprites
 * Player sprites for different weapons (2/3, shotgun remaining)
 * Grenade/rocket launcher
-* Zombie gibs
 * Loading text
 
 ### Bugs

@@ -10,9 +10,7 @@
             <div class="control-pane" id="control-pane-right">
                 <p>Q - Previous Weapon</p>
                 <p>E - Next Weapon</p>
-                <p>1 - Pistol</p>
-                <p>2 - Rifle</p>
-                <p>3 - Shotgun</p>
+                <p>1/2/3 - Switch Weapon</p>
             </div>
         </div>
     </div>
