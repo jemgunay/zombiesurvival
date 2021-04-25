@@ -1,5 +1,6 @@
 <template>
     <div id="container">
+        <p id="loading-text"></p>
         <div id="game"></div>
         <div id="controls">
             <div class="control-pane">
@@ -10,9 +11,7 @@
             <div class="control-pane" id="control-pane-right">
                 <p>Q - Previous Weapon</p>
                 <p>E - Next Weapon</p>
-                <p>1 - Pistol</p>
-                <p>2 - Rifle</p>
-                <p>3 - Shotgun</p>
+                <p>1/2/3 - Switch Weapon</p>
             </div>
         </div>
     </div>
@@ -24,6 +23,19 @@ import {Game} from "@/assets/js/game/Game.js";
 export default {
     name: "Game",
     mounted() {
+        // loading text ellipsis
+        let loadingText = document.getElementById("loading-text");
+        let dotCount = 0;
+        setInterval(function () {
+            if (dotCount === 3) {
+                dotCount = 0;
+            } else {
+                dotCount++;
+            }
+            loadingText.innerHTML = "Loading" + ".".repeat(dotCount);
+        }, 500);
+
+        // start game
         this.container = document.getElementById("game");
         Game.init(this.container);
     }
@@ -36,6 +48,16 @@ export default {
         height: 480px;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    #loading-text {
+        position: absolute;
+        z-index: -1;
+        top: 32%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "ds-zombie-cyr";
+        font-size: 1.5em;
     }
 
     #controls {
@@ -53,7 +75,7 @@ export default {
         text-align: left;
     }
 
-    .control-pane p {
+    p {
         color: #FFFFFF;
         margin: 10px 15px;
         /* prevent text from being highlighted */

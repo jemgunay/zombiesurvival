@@ -23,6 +23,13 @@ export function Load(completedCallback) {
         .add("downward_blood_splat", "game/images/downward_blood_splat.png")
         .add("farm_border_top", "game/images/farm_border_top.png")
         .add("farm_border_bottom", "game/images/farm_border_bottom.png")
+        .add("normal_zombie_gib_1", "game/images/gibs/normal_zombie_gib_1.png")
+        .add("normal_zombie_gib_2", "game/images/gibs/normal_zombie_gib_2.png")
+        .add("normal_zombie_gib_3", "game/images/gibs/normal_zombie_gib_3.png")
+        .add("normal_zombie_gib_4", "game/images/gibs/normal_zombie_gib_4.png")
+        .add("normal_zombie_gib_5", "game/images/gibs/normal_zombie_gib_5.png")
+        .add("normal_zombie_gib_6", "game/images/gibs/normal_zombie_gib_6.png")
+        .add("normal_zombie_gib_7", "game/images/gibs/normal_zombie_gib_7.png")
         // sounds
         // weapons
         .add("1911_pistol_shoot_1", "game/sounds/1911_pistol/1911_pistol_shot_1.wav")
