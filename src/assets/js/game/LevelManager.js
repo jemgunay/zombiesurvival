@@ -44,7 +44,6 @@ export default class LevelManager {
                 spawnTime: {min: 400, max: 600},
                 zombieSpeed: 1.2,
             },
-            // cheeky fast zombie round
             {
                 zombieCount: 30,
                 spawnTime: {min: 1000, max: 1300},

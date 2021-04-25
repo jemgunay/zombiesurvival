@@ -172,6 +172,7 @@ export default class World extends PIXI.Container {
                             let ammoDrop = new AmmoDrop(zombie.x, zombie.y, randAmmoType);
                             this.ammoDropContainer.addChild(ammoDrop);
                         }
+
                         // generate gibs
                         let gibNums = Util.Shuffle([1, 2, 3, 4, 5, 6, 7]);
                         for (let i = 0; i < 3; i++) {

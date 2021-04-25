@@ -17,12 +17,13 @@ export function Load(completedCallback) {
         .add("normal_zombie_torso_red", "game/images/sprite_sheets/normal_zombie_torso_red.json")
         .add("normal_zombie_arms", "game/images/sprite_sheets/normal_zombie_arms.json")
         .add("normal_zombie_legs", "game/images/sprite_sheets/normal_zombie_legs.json")
-        // static images
+        // images
         .add("grass", "game/images/grass.jpg")
         .add("directional_blood_splat", "game/images/directional_blood_splat.png")
         .add("downward_blood_splat", "game/images/downward_blood_splat.png")
         .add("farm_border_top", "game/images/farm_border_top.png")
         .add("farm_border_bottom", "game/images/farm_border_bottom.png")
+        // zombie images
         .add("normal_zombie_gib_1", "game/images/gibs/normal_zombie_gib_1.png")
         .add("normal_zombie_gib_2", "game/images/gibs/normal_zombie_gib_2.png")
         .add("normal_zombie_gib_3", "game/images/gibs/normal_zombie_gib_3.png")
@@ -30,8 +31,11 @@ export function Load(completedCallback) {
         .add("normal_zombie_gib_5", "game/images/gibs/normal_zombie_gib_5.png")
         .add("normal_zombie_gib_6", "game/images/gibs/normal_zombie_gib_6.png")
         .add("normal_zombie_gib_7", "game/images/gibs/normal_zombie_gib_7.png")
-        // sounds
-        // weapons
+        // ammo images
+        .add("pistol_ammo", "game/images/ammo/pistol_ammo.png")
+        .add("rifle_ammo", "game/images/ammo/rifle_ammo.png")
+        .add("shotgun_ammo", "game/images/ammo/shotgun_ammo.png")
+        // weapon sounds
         .add("1911_pistol_shoot_1", "game/sounds/1911_pistol/1911_pistol_shot_1.wav")
         .add("1911_pistol_shoot_2", "game/sounds/1911_pistol/1911_pistol_shot_2.wav")
         .add("1911_pistol_reload", "game/sounds/1911_pistol/pistol_reload.mp3")
@@ -45,7 +49,7 @@ export function Load(completedCallback) {
         .add("spas_12_shotgun_insert_shell", "game/sounds/spas_12_shotgun/spas_12_shotgun_insert_shell.wav")
         .add("change_weapon", "game/sounds/change_weapon.wav")
         .add("ammo_pickup", "game/sounds/ammo_pickup.wav")
-        // flesh impact
+        // flesh impact sounds
         .add("flesh_impact_1", "game/sounds/flesh_impact/blt_imp_flesh_lyr_plr_10.wav")
         .add("flesh_impact_2", "game/sounds/flesh_impact/blt_imp_flesh_plr_04.wav")
         .add("flesh_impact_3", "game/sounds/flesh_impact/blt_imp_flesh_plr_05.wav")
@@ -58,7 +62,7 @@ export function Load(completedCallback) {
         .add("flesh_explode_2", "game/sounds/flesh_explode/gib_body_explode_02.wav")
         .add("flesh_explode_3", "game/sounds/flesh_explode/gib_body_explode_03.wav")
         .add("flesh_explode_4", "game/sounds/flesh_explode/gib_body_explode_09.wav")
-        // walk on grass
+        // walk on grass sounds
         .add("walk_grass_1", "game/sounds/walk_grass/step_sprint_grass_short_r_01.wav")
         .add("walk_grass_2", "game/sounds/walk_grass/step_sprint_grass_short_r_02.wav")
         .add("walk_grass_3", "game/sounds/walk_grass/step_sprint_grass_short_r_03.wav")

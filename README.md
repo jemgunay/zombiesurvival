@@ -28,6 +28,8 @@ npm run lint-fix
 * Ammo drop sprites
 * Player sprites for different weapons (2/3, shotgun remaining)
 * Grenade/rocket launcher
+* Start game on focus
+* Redesign aim to point rifle directly at cursor (machine gun is currently offset) 
 
 ### Bugs
 
