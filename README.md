@@ -14,6 +14,7 @@ npm run serve
 npm run build
 # lint
 npm run lint
+npm run lint-fix
 ```
 
 ## TODO
@@ -27,7 +28,6 @@ npm run lint
 * Ammo drop sprites
 * Player sprites for different weapons (2/3, shotgun remaining)
 * Grenade/rocket launcher
-* Loading text
 
 ### Bugs
 
