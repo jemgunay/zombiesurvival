@@ -25,10 +25,6 @@ npm run lint-fix
     * Zombie moans
     * Ambient sounds
 * Fat zombies
-* Ammo drop sprites
 * Player sprites for different weapons (2/3, shotgun remaining)
 * Grenade/rocket launcher
-
-### Bugs
-
-* Fix zombie rotation issue (travel clockwise around zombie and they ping to face anticlockwise)
+*
