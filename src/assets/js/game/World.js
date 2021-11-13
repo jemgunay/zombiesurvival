@@ -163,15 +163,15 @@ export default class World extends PIXI.Container {
                         let newSplat = new Decal.NewDirectionalBlood(zombie.x, zombie.y, zombie.rotation);
                         this.bloodContainer.addChild(newSplat);
 
-                        // sometimes drop ammo
+                        // sometimes drop random ammo type
                         if (Util.RandomInt(1, 6) === 1) {
-                            // random ammo type
                             const ammoTypes = Object.keys(this.player.armoury.ammo);
                             const randAmmoKey = ammoTypes[Util.RandomInt(0, ammoTypes.length - 1)];
                             const randAmmoType = this.player.armoury.ammo[randAmmoKey];
                             let ammoDrop = new AmmoDrop(zombie.x, zombie.y, randAmmoType);
                             this.ammoDropContainer.addChild(ammoDrop);
                         }
+
                         // generate gibs
                         let gibNums = Util.Shuffle([1, 2, 3, 4, 5, 6, 7]);
                         for (let i = 0; i < 3; i++) {

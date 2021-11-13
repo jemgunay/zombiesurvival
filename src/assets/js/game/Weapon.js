@@ -1,5 +1,6 @@
 import * as ResourceManager from "./ResourceManager";
 import * as PIXI from "pixi.js";
+import * as Util from "./Util";
 
 export const SemiAutoTrigger = "semi";
 export const AutoTrigger = "auto";
@@ -26,7 +27,7 @@ export class Armoury {
             ammoDropSize: 10,
             projectileSpeed: 16,
             projectileDamage: 40,
-            colour: 0xFF00FF,
+            spriteName: "pistol_ammo"
         };
         this.ammo[RifleAmmo] = {
             name: RifleAmmo,
@@ -34,7 +35,7 @@ export class Armoury {
             ammoDropSize: 30,
             projectileSpeed: 18,
             projectileDamage: 34,
-            colour: 0x00FF00,
+            spriteName: "rifle_ammo"
         };
         this.ammo[ShotgunAmmo] = {
             name: ShotgunAmmo,
@@ -42,7 +43,7 @@ export class Armoury {
             ammoDropSize: 8,
             projectileSpeed: 16,
             projectileDamage: 22,
-            colour: 0x0000FF,
+            spriteName: "shotgun_ammo"
         };
         this.weapons = [];
         this.equipped = null;
@@ -95,15 +96,15 @@ export class Armoury {
     }
 }
 
-export class AmmoDrop extends PIXI.Graphics {
+export class AmmoDrop extends PIXI.Sprite {
     constructor(x, y, ammoType) {
-        super();
+        super(ResourceManager.GetTexture(ammoType.spriteName));
 
+        this.anchor.set(0.5, 0.5);
+        this.scale.set(0.7);
         this.radius = 10;
-        this.beginFill(ammoType.colour);
-        this.drawCircle(0, 0, this.radius);
-        this.endFill();
         this.position.set(x, y);
+        this.rotation = Util.DegToRad(Util.RandomInt(0, 360));
         this.ammoType = ammoType;
     }
 }
