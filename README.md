@@ -30,8 +30,7 @@ npm run lint-fix
 * Sounds
     * Zombie moans
     * Ambient sounds
-* Fat zombies
-* Ammo drop sprites
+* Chunky zombies
 * Player sprites for different weapons (2/3, shotgun remaining)
 * Grenade/rocket launcher
 * Start game on focus
