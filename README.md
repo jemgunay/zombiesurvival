@@ -4,6 +4,12 @@
 
 Survive as many waves of zombies as you can... [Play here!](https://jemgunay.co.uk/zombiesurvival)
 
+<p align="center">
+  <img src="/screenshots/screenshot_1.png" width="30%"/>
+  <img src="/screenshots/screenshot_2.png" width="30%"/>
+  <img src="/screenshots/screenshot_3.png" width="30%"/>
+</p>
+
 ## Usage
 
 ```bash
